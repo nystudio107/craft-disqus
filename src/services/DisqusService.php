@@ -2,7 +2,8 @@
 /**
  * Disqus plugin for Craft CMS 3.x
  *
- * Integrates the Disqus commenting system into Craft 3 websites, including Single Sign On (SSO) and custom login/logout URLs
+ * Integrates the Disqus commenting system into Craft 3 websites, including
+ * Single Sign On (SSO) and custom login/logout URLs
  *
  * @link      https://nystudio107.com
  * @copyright Copyright (c) 2017 nystudio107
@@ -14,6 +15,8 @@ use nystudio107\disqus\Disqus;
 
 use Craft;
 use craft\base\Component;
+use craft\helpers\Template;
+use craft\web\View;
 
 /**
  * @author    nystudio107
@@ -32,6 +35,7 @@ class DisqusService extends Component
      * @param string $disqusTitle
      * @param string $disqusUrl
      * @param string $disqusCategoryId
+     * @param string $disqusLanguage
      *
      * @return string
      */
@@ -76,13 +80,13 @@ class DisqusService extends Component
         $currentUser = Craft::$app->getUser()->getIdentity();
         if ($currentUser) {
             $data['id'] = $currentUser->id;
-            if (craft()->config->get('useEmailAsUsername')) {
+            if (Craft::$app->config->get('useEmailAsUsername')) {
                 $data['username'] = $currentUser->getFullName();
             } else {
                 $data['username'] = $currentUser->username;
             }
             $data['email'] = $currentUser->email;
-            $data['avatar'] = $currentUser->getPhotoUrl();
+            $data['avatar'] = $currentUser->getPhoto();
         }
 
         // Encode the data array and generate the hMac
@@ -100,7 +104,7 @@ class DisqusService extends Component
             'message' => $message,
             'hmac' => $hMac,
             'timestamp' => $timestamp,
-            'disqusPublicKey' => $disqusPublicKey,
+            'disqusPublicKey' => $settings['disqusPublicKey'],
         );
 
         // Render the SSO custom login template
@@ -136,29 +140,22 @@ class DisqusService extends Component
      */
     protected function renderPluginTemplate($templatePath, $vars)
     {
-        // Stash the old template path, and set it to our plugin's templates folder
-        $oldPath = method_exists(craft()->templates, 'getTemplatesPath')
-            ? craft()->templates->getTemplatesPath()
-            : craft()->path->getTemplatesPath();
-        $newPath = craft()->path->getPluginsPath() . 'disqus/templates';
-        method_exists(craft()->templates, 'setTemplatesPath')
-            ? craft()->templates->setTemplatesPath($newPath)
-            : craft()->path->setTemplatesPath($newPath);
+        // Stash the old template mode, and set it AdminCP template mode
+        $oldMode = Craft::$app->view->getTemplateMode();
+        Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
 
         // Render the template with our vars passed in
         try {
-            $htmlText = craft()->templates->render($templatePath, $vars);
+            $htmlText = Craft::$app->view->renderTemplate($templatePath, $vars);
         } catch (\Exception $e) {
             $htmlText = 'Error rendering template ' . $templatePath . ' -> ' . $e->getMessage();
-            DisqusPlugin::log($htmlText, LogLevel::Error);
+            Craft::error(Craft::t('disqus', $htmlText), __METHOD__);
         }
 
-        // Restore the old template path
-        method_exists(craft()->templates, 'setTemplatesPath')
-            ? craft()->templates->setTemplatesPath($oldPath)
-            : craft()->path->setTemplatesPath($oldPath);
+        // Restore the old template mode
+        Craft::$app->view->setTemplateMode($oldMode);
 
-        return TemplateHelper::getRaw($htmlText);
+        return Template::raw($htmlText);
     }
 
     /**
