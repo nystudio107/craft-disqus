@@ -33,7 +33,7 @@
         "name": "Disqus",
         "handle": "disqus",
         "schemaVersion": "1.0.0",
-        "hasSettings": false,
+        "hasSettings": true,
         "hasCpSection": false,
         "changelogUrl": "https://raw.githubusercontent.com/nystudio107/craft3-disqus/master/CHANGELOG.md",
         "components": {

@@ -2,7 +2,8 @@
 /**
  * Disqus plugin for Craft CMS 3.x
  *
- * Integrates the Disqus commenting system into Craft 3 websites, including Single Sign On (SSO) and custom login/logout URLs
+ * Integrates the Disqus commenting system into Craft 3 websites, including
+ * Single Sign On (SSO) and custom login/logout URLs
  *
  * @link      https://nystudio107.com
  * @copyright Copyright (c) 2017 nystudio107

@@ -146,7 +146,7 @@ class DisqusService extends Component
 
         // Render the template with our vars passed in
         try {
-            $htmlText = Craft::$app->view->renderTemplate($templatePath, $vars);
+            $htmlText = Craft::$app->view->renderTemplate('disqus/' . $templatePath, $vars);
         } catch (\Exception $e) {
             $htmlText = 'Error rendering template ' . $templatePath . ' -> ' . $e->getMessage();
             Craft::error(Craft::t('disqus', $htmlText), __METHOD__);
