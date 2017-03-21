@@ -49,86 +49,86 @@ class DisqusService extends Component
         $settings = Disqus::$plugin->getSettings();
         $disqusShortname = $settings['disqusShortname'];
 
-        if ($settings['useSSO']) {
-            $this->outputSSOTag();
-        }
-
-        $vars = array(
-            'disqusShortname' => $disqusShortname,
+        $vars = [
+            'disqusShortname'  => $disqusShortname,
             'disqusIdentifier' => $disqusIdentifier,
-            'disqusTitle' => $disqusTitle,
-            'disqusUrl' => $disqusUrl,
+            'disqusTitle'      => $disqusTitle,
+            'disqusUrl'        => $disqusUrl,
             'disqusCategoryId' => $disqusCategoryId,
-            'disqusLanguage' => $disqusLanguage,
-        );
+            'disqusLanguage'   => $disqusLanguage,
+        ];
+        $vars = array_merge($vars, $this->getSSOVars());
         $result = $this->renderPluginTemplate('disqusEmbedTag', $vars);
-
-        return $result;
-    }
-
-    /**
-     * Output the Disqus SSO Tag
-     *
-     * @return string
-     */
-    public function outputSSOTag()
-    {
-        $settings = Disqus::$plugin->getSettings();
-        $data = array();
-
-        // Set the data array
-        $currentUser = Craft::$app->getUser()->getIdentity();
-        if ($currentUser) {
-            $data['id'] = $currentUser->id;
-            if (Craft::$app->config->get('useEmailAsUsername')) {
-                $data['username'] = $currentUser->getFullName();
-            } else {
-                $data['username'] = $currentUser->username;
-            }
-            $data['email'] = $currentUser->email;
-            $data['avatar'] = $currentUser->getPhoto();
-        }
-
-        // Encode the data array and generate the hMac
-        $message = base64_encode(json_encode($data));
-        $timestamp = time();
-        $hMac = $this->disqusHmacSha1(
-            $message
-            . ' '
-            . $timestamp,
-            $settings['disqusSecretKey']
-        );
-
-        // Set the vars for the template
-        $vars = array(
-            'message' => $message,
-            'hmac' => $hMac,
-            'timestamp' => $timestamp,
-            'disqusPublicKey' => $settings['disqusPublicKey'],
-        );
-
-        // Render the SSO custom login template
-        if ($settings['customLogin']) {
-            $vars = array_merge($vars, array(
-                'loginName' => $settings['loginName'],
-                'loginButton' => $settings['loginButton'],
-                'loginIcon' => $settings['loginIcon'],
-                'loginUrl' => $settings['loginUrl'],
-                'loginLogoutUrl' => $settings['loginLogoutUrl'],
-                'loginWidth' => $settings['loginWidth'],
-                'loginHeight' => $settings['loginHeight'],
-            ));
-            $result = $this->renderPluginTemplate('disqusSsoCustomLogin', $vars);
-        } else {
-            // Render the SSO template
-            $result = $this->renderPluginTemplate('disqusSso', $vars);
-        }
 
         return $result;
     }
 
     // Protected Methods
     // =========================================================================
+
+    /**
+     * Return the SSO vars
+     *
+     * @return array
+     */
+    protected function getSSOVars(): array
+    {
+        $settings = Disqus::$plugin->getSettings();
+        $vars = [
+            'useSSO'         => false,
+            'useCustomLogin' => false,
+        ];
+        if ($settings['useSSO']) {
+            $data = [];
+
+            // Set the data array
+            $currentUser = Craft::$app->getUser()->getIdentity();
+            if ($currentUser) {
+                $data['id'] = $currentUser->id;
+                if (Craft::$app->config->get('useEmailAsUsername')) {
+                    $data['username'] = $currentUser->getFullName();
+                } else {
+                    $data['username'] = $currentUser->username;
+                }
+                $data['email'] = $currentUser->email;
+                $data['avatar'] = $currentUser->getPhoto();
+            }
+
+            // Encode the data array and generate the hMac
+            $message = base64_encode(json_encode($data));
+            $timestamp = time();
+            $hMac = $this->disqusHmacSha1(
+                $message
+                .' '
+                .$timestamp,
+                $settings['disqusSecretKey']
+            );
+
+            // Set the vars for the template
+            $vars = array_merge($vars, [
+                'useSSO'          => true,
+                'message'         => $message,
+                'hmac'            => $hMac,
+                'timestamp'       => $timestamp,
+                'disqusPublicKey' => $settings['disqusPublicKey'],
+            ]);
+
+            // Set the vars for the custom login
+            if ($settings['customLogin']) {
+                $vars = array_merge($vars, [
+                    'useCustomLogin' => true,
+                    'loginName'      => $settings['loginName'],
+                    'loginButton'    => $settings['loginButton'],
+                    'loginIcon'      => $settings['loginIcon'],
+                    'loginUrl'       => $settings['loginUrl'],
+                    'loginLogoutUrl' => $settings['loginLogoutUrl'],
+                    'loginWidth'     => $settings['loginWidth'],
+                    'loginHeight'    => $settings['loginHeight'],
+                ]);
+            }
+        }
+        return $vars;
+    }
 
     /**
      * Render a plugin template
@@ -146,9 +146,9 @@ class DisqusService extends Component
 
         // Render the template with our vars passed in
         try {
-            $htmlText = Craft::$app->view->renderTemplate('disqus/' . $templatePath, $vars);
+            $htmlText = Craft::$app->view->renderTemplate('disqus/'.$templatePath, $vars);
         } catch (\Exception $e) {
-            $htmlText = 'Error rendering template ' . $templatePath . ' -> ' . $e->getMessage();
+            $htmlText = 'Error rendering template '.$templatePath.' -> '.$e->getMessage();
             Craft::error(Craft::t('disqus', $htmlText), __METHOD__);
         }
 
@@ -160,7 +160,8 @@ class DisqusService extends Component
 
     /**
      * HMAC->SHA1
-     * From: https://github.com/disqus/DISQUS-API-Recipes/blob/master/sso/php/sso.php
+     * From:
+     * https://github.com/disqus/DISQUS-API-Recipes/blob/master/sso/php/sso.php
      *
      * @param $data
      * @param $key

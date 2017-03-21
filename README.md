@@ -37,7 +37,7 @@ You only need this is you want to have a custom login button displayed in the Di
 
 `url` should be the address of your login page. The page will be opened in a new window and it must close itself after authentication is done. That is how we know when it is done and reload the page.
 
-`logout` should be set to `http://example.com/actions/disqus/logoutRedirect` to hit the Disqus controller that handles the logout and redirect.
+`logout` should be set to `http://example.com/actions/disqus/default/logout-redirect` to hit the Disqus controller that handles the logout and redirect.
 
 ## Using the Disqus plugin in your templates
 
@@ -98,20 +98,10 @@ In its most basic case, this will result in output to your Craft template that l
 
 The `DISQUS_SHORTNAME` setting is taken from the Admin CP or `config.php` settings, and the rest of the `DISQUS_*` settings are passed in as variables from the `disqusEmbed` Twig filter/function.
 
-If you have turned on "User Single Sign On" it will also output something like this prior to the above tag:
+If you have turned on "Use Single Sign On" it will also output something like this in the above tag:
 
-    <script data-cfasync="false" type="text/javascript">
-        if (typeof disqus_config !== 'undefined') {
-            var _old_disqus_config = disqus_config;
-        }
-        var disqus_config = function() {
-            if (typeof _old_disqus_config !== 'undefined') {
-                _old_disqus_config.apply(this);
-            }
-            this.page.remote_auth_s3 = "eyJpZCI6IjEiLCJ1c2VybmFtZSI6IkFkbWluIiwiZW1haWwiOiJhbmRyZXdAbWVnYWxvbWFuaWFjLmNvbSJ9 c0e4b8f2eca3c0e995cdd64ba2dedd720820ab5b 1431214361";
-            this.page.api_key = "GTX1r1JBbiJah3hzZkBO06hI71VxjyWxgdurckHYBWLiELkHDidVmnDkBW0XeROe";
-        };
-    </script>
+    this.page.remote_auth_s3 = "eyJpZCI6IjEiLCJ1c2VybmFtZSI6IkFkbWluIiwiZW1haWwiOiJhbmRyZXdAbWVnYWxvbWFuaWFjLmNvbSJ9 c0e4b8f2eca3c0e995cdd64ba2dedd720820ab5b 1431214361";
+    this.page.api_key = "GTX1r1JBbiJah3hzZkBO06hI71VxjyWxgdurckHYBWLiELkHDidVmnDkBW0XeROe";
 
 Which, assuming you've set up the Disqus SSO properly, will allow your Craft users to be logged into Disqus using your Craft website credentials.
 

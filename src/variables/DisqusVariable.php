@@ -26,14 +26,6 @@ class DisqusVariable
     // =========================================================================
 
     /**
-     * @return mixed
-     */
-    public function disqusSSO()
-    {
-        return Disqus::$plugin->disqusService->outputSSOTag();
-    }
-
-    /**
      * @param string $disqusIdentifier
      * @param string $disqusTitle
      * @param string $disqusUrl
