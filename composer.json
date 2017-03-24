@@ -2,7 +2,7 @@
     "name": "nystudio107/craft3-disqus",
     "description": "Integrates the Disqus commenting system into Craft 3 websites, including Single Sign On (SSO) and custom login/logout URLs",
     "type": "craft-plugin",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "keywords": [
         "craft",
         "cms",
@@ -33,7 +33,7 @@
         "name": "Disqus",
         "handle": "disqus",
         "schemaVersion": "1.0.0",
-        "hasSettings": true,
+        "hasCpSettings": true,
         "hasCpSection": false,
         "changelogUrl": "https://raw.githubusercontent.com/nystudio107/craft3-disqus/master/CHANGELOG.md",
         "components": {
