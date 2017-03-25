@@ -85,7 +85,7 @@ class DisqusService extends Component
             $currentUser = Craft::$app->getUser()->getIdentity();
             if ($currentUser) {
                 $data['id'] = $currentUser->id;
-                if (Craft::$app->config->get('useEmailAsUsername')) {
+                if (Craft::$app->getConfig()->getGeneral()->useEmailAsUsername) {
                     $data['username'] = $currentUser->getFullName();
                 } else {
                     $data['username'] = $currentUser->username;

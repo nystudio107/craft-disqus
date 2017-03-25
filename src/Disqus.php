@@ -51,7 +51,14 @@ class Disqus extends Plugin
 
         Craft::$app->view->twig->addExtension(new DisqusTwigExtension());
 
-        Craft::info(Craft::t('disqus', '{name} plugin loaded', ['name' => $this->name]), __METHOD__);
+        Craft::info(
+            Craft::t(
+                'disqus',
+                '{name} plugin loaded',
+                ['name' => $this->name]
+            ),
+            __METHOD__
+        );
     }
 
     /**
@@ -60,29 +67,6 @@ class Disqus extends Plugin
     public function defineTemplateComponent()
     {
         return DisqusVariable::class;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getSettings()
-    {
-        $settings = parent::getSettings();
-        /**
-         * Doesn't work yet as per: https://github.com/craftcms/cms/issues/1548
-         *
-        $baseModel = $this->createSettingsModel();
-        $base = $baseModel->toArray();
-        foreach ($base as $key => $row) {
-            $override = Craft::$app->config->get($key, 'disqus');
-
-            if (!is_null($override) && !empty($override)) {
-                $settings->$key = $override;
-            }
-        }
-        */
-
-        return $settings;
     }
 
     // Protected Methods
