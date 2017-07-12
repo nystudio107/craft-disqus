@@ -1,5 +1,9 @@
 # Disqus Changelog
 
+## 1.0.3 - 2017.07.12
+### Changed
+* Craft 3 beta 20 compatibility
+
 ## 1.0.2 - 2017.03.24
 ### Changed
 * `hasSettings` -> `hasCpSettings` for Craft 3 beta 8 compatibility

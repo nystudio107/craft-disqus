@@ -18,6 +18,10 @@ use nystudio107\disqus\models\Settings;
 
 use Craft;
 use craft\base\Plugin;
+use craft\events\DefineComponentsEvent;
+use craft\web\twig\variables\CraftVariable;
+
+use yii\base\Event;
 
 /**
  * Class Disqus
@@ -49,6 +53,14 @@ class Disqus extends Plugin
         parent::init();
         self::$plugin = $this;
 
+        Event::on(
+            CraftVariable::class,
+            CraftVariable::EVENT_DEFINE_COMPONENTS,
+            function (DefineComponentsEvent $event) {
+                $event->components['disqus'] = DisqusVariable::class;
+            }
+        );
+
         Craft::$app->view->twig->addExtension(new DisqusTwigExtension());
 
         Craft::info(
@@ -59,14 +71,6 @@ class Disqus extends Plugin
             ),
             __METHOD__
         );
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function defineTemplateComponent()
-    {
-        return DisqusVariable::class;
     }
 
     // Protected Methods
