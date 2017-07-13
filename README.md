@@ -8,8 +8,8 @@ Related: [Disqus for Craft 2.x](https://github.com/nystudio107/disqus)
 
 To install Disqus, follow these steps:
 
-1. Download & unzip the file and place the `disqus` directory into your `craft/plugins` directory
-2. Install with Composer via `composer require nystudio107/craft3-disqus`
+1. Install with Composer via `composer require nystudio107/craft3-disqus` from your project directory
+2. Install plugin in the Craft Control Panel under Settings > Plugins
 
 Disqus works on Craft 3.x.
 
