@@ -1,5 +1,9 @@
 # Disqus Changelog
 
+## 1.0.4 - 2017.08.05
+### Changed
+* Craft 3 beta 23 compatibility
+
 ## 1.0.3 - 2017.07.12
 ### Changed
 * Craft 3 beta 20 compatibility
