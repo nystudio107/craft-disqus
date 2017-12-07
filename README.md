@@ -4,6 +4,10 @@ Integrates the Disqus commenting system into Craft 3 websites, including Single 
 
 Related: [Disqus for Craft 2.x](https://github.com/nystudio107/disqus)
 
+## Requirements
+
+This plugin requires Craft CMS 3.0.0-RC1 or later.
+
 ## Installation
 
 To install Disqus, follow these steps:
