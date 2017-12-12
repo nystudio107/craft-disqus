@@ -62,7 +62,7 @@ class Disqus extends Plugin
             }
         );
 
-        Craft::$app->view->twig->addExtension(new DisqusTwigExtension());
+        Craft::$app->view->registerTwigExtension(new DisqusTwigExtension());
 
         Craft::info(
             Craft::t(
