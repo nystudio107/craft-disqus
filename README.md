@@ -47,6 +47,8 @@ You only need this is you want to have a custom login button displayed in the Di
 
 ## Using the Disqus plugin in your templates
 
+### Embedding comments
+
 All of these methods accomplish the same thing:
 
     {# Output the Disqus embed code using the 'disqusEmbed' function #}
@@ -112,6 +114,19 @@ If you have turned on "Use Single Sign On" it will also output something like th
 Which, assuming you've set up the Disqus SSO properly, will allow your Craft users to be logged into Disqus using your Craft website credentials.
 
 If you have "Use Custom Login/Logout URLs" turned on, it will also generate the `this.sso` settings for you, [as described here](https://help.disqus.com/customer/portal/articles/236206-integrating-single-sign-on#sso-login)
+
+### Displaying Comment Counts
+
+The Disqus plugin also allows you to display the number of comments a particular Disqus thread has received in your templates. All of these methods accomplish the same thing:
+
+    {# Output the number of comments using the 'disqusEmbed' function #}
+    {{ disqusCount(DISQUS_IDENTIFIER, DISQUS_URL) }}
+
+    {# Output the number of comments using the 'disqusEmbed' filter #}
+    {{ DISQUS_IDENTIFIER | disqusCount(DISQUS_URL) }}
+
+    {# Output the number of comments using the 'disqusEmbed' variable #}
+    {{ craft.disqus.disqusCount(DISQUS_IDENTIFIER, DISQUS_URL) }}
 
 ## Disqus Multi-lingual websites
 

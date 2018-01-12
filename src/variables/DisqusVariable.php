@@ -32,7 +32,7 @@ class DisqusVariable
      * @param string $disqusCategoryId
      * @param string $disqusLanguage
      *
-     * @return mixed
+     * @return string
      */
     public function disqusEmbed(
         $disqusIdentifier = "",
@@ -47,6 +47,22 @@ class DisqusVariable
             $disqusUrl,
             $disqusCategoryId,
             $disqusLanguage
+        );
+    }
+
+    /**
+     * @param string $disqusIdentifier
+     * @param string $disqusUrl
+     *
+     * @return int
+     */
+    public function disqusCount(
+        $disqusIdentifier = "",
+        $disqusUrl = ""
+    ) {
+        return Disqus::$plugin->disqusService->getCommentsCount(
+            $disqusIdentifier,
+            $disqusUrl
         );
     }
 }

@@ -13,8 +13,6 @@ namespace nystudio107\disqus\twigextensions;
 
 use nystudio107\disqus\Disqus;
 
-use Craft;
-
 /**
  * @author    nystudio107
  * @package   Disqus
@@ -40,6 +38,7 @@ class DisqusTwigExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFilter('disqusEmbed', [$this, 'disqusEmbed']),
+            new \Twig_SimpleFilter('disqusCount', [$this, 'disqusCount']),
         ];
     }
 
@@ -50,6 +49,7 @@ class DisqusTwigExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFunction('disqusEmbed', [$this, 'disqusEmbed']),
+            new \Twig_SimpleFunction('disqusCount', [$this, 'disqusCount']),
         ];
     }
 
@@ -60,7 +60,7 @@ class DisqusTwigExtension extends \Twig_Extension
      * @param string $disqusCategoryId
      * @param string $disqusLanguage
      *
-     * @return mixed
+     * @return string
      */
     public function disqusEmbed(
         $disqusIdentifier = "",
@@ -75,6 +75,22 @@ class DisqusTwigExtension extends \Twig_Extension
             $disqusUrl,
             $disqusCategoryId,
             $disqusLanguage
+        );
+    }
+
+    /**
+     * @param string $disqusIdentifier
+     * @param string $disqusUrl
+     *
+     * @return int
+     */
+    public function disqusCount(
+        $disqusIdentifier = "",
+        $disqusUrl = ""
+    ) {
+        return Disqus::$plugin->disqusService->getCommentsCount(
+            $disqusIdentifier,
+            $disqusUrl
         );
     }
 }
