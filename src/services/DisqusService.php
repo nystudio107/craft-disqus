@@ -18,6 +18,9 @@ use craft\base\Component;
 use craft\helpers\Template;
 use craft\web\View;
 
+use yii\base\Exception;
+use yii\base\InvalidConfigException;
+
 /**
  * @author    nystudio107
  * @package   Disqus
@@ -62,48 +65,50 @@ class DisqusService extends Component
 
         return $result;
     }
-    
+
     /**
-     * Output the Disqus comments count
+     * Return the number of comments for a particular thread
      *
      * @param string $disqusIdentifier
-     * @param string $disqusTitle
      * @param string $disqusUrl
-     * @param string $disqusCategoryId
-     * @param string $disqusLanguage
      *
-     * @return string
+     * @return int
      */
     public function getCommentsCount(
         $disqusIdentifier = "",
         $disqusUrl = ""
     ) {
-    
-      $settings = Disqus::$plugin->getSettings();
-      if (!empty($settings['disqusPublicKey'])){
-        $apiKey = $settings["disqusPublicKey"]; 
-      
-        $url = "https://disqus.com/api/3.0/threads/details.json?api_key=" . $apiKey . "&forum=" . $disqusIdentifier . "&thread:link=" . $disqusUrl;
-        
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $return = curl_exec($ch);
-        curl_close($ch);
-        
-        $json = json_decode($return, true);
-        if($json["code"] == 0){
-            return $json["response"]["posts"];
-        }else{
-          Craft::error(Craft::t('disqus', $json["response"]), __METHOD__);
-          return 0;
+
+        $settings = Disqus::$plugin->getSettings();
+        if (!empty($settings['disqusPublicKey'])) {
+            $apiKey = $settings["disqusPublicKey"];
+
+            $url = "https://disqus.com/api/3.0/threads/details.json?api_key="
+                .$apiKey
+                ."&forum=".$disqusIdentifier
+                ."&thread:link="
+                .$disqusUrl;
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $return = curl_exec($ch);
+            curl_close($ch);
+
+            $json = json_decode($return, true);
+            if ($json["code"] == 0) {
+                return $json["response"]["posts"];
+            } else {
+                Craft::error(Craft::t('disqus', $json["response"]), __METHOD__);
+
+                return 0;
+            }
+        } else {
+            Craft::error(Craft::t('disqus', "Public API Key missing"), __METHOD__);
+
+            return 0;
         }
-      }else{
-        Craft::error(Craft::t('disqus', "Public API Key missing"), __METHOD__);
-        return 0;
-      }
-    
     }
 
     // Protected Methods
@@ -134,7 +139,10 @@ class DisqusService extends Component
                     $data['username'] = $currentUser->username;
                 }
                 $data['email'] = $currentUser->email;
-                $data['avatar'] = $currentUser->getPhoto();
+                try {
+                    $data['avatar'] = $currentUser->getPhoto();
+                } catch (InvalidConfigException $e) {
+                }
             }
 
             // Encode the data array and generate the hMac
@@ -170,6 +178,7 @@ class DisqusService extends Component
                 ]);
             }
         }
+
         return $vars;
     }
 
@@ -185,7 +194,11 @@ class DisqusService extends Component
     {
         // Stash the old template mode, and set it AdminCP template mode
         $oldMode = Craft::$app->view->getTemplateMode();
-        Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
+        try {
+            Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
+        } catch (Exception $e) {
+            Craft::error($e->getMessage(), __METHOD__);
+        }
 
         // Render the template with our vars passed in
         try {
@@ -196,7 +209,11 @@ class DisqusService extends Component
         }
 
         // Restore the old template mode
-        Craft::$app->view->setTemplateMode($oldMode);
+        try {
+            Craft::$app->view->setTemplateMode($oldMode);
+        } catch (Exception $e) {
+            Craft::error($e->getMessage(), __METHOD__);
+        }
 
         return Template::raw($htmlText);
     }
