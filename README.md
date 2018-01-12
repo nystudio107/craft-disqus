@@ -119,13 +119,13 @@ If you have "Use Custom Login/Logout URLs" turned on, it will also generate the 
 
 The Disqus plugin also allows you to display the number of comments a particular Disqus thread has received in your templates. All of these methods accomplish the same thing:
 
-    {# Output the number of comments using the 'disqusEmbed' function #}
+    {# Output the number of comments using the 'disqusCount' function #}
     {{ disqusCount(DISQUS_IDENTIFIER) }}
 
-    {# Output the number of comments using the 'disqusEmbed' filter #}
+    {# Output the number of comments using the 'disqusCount' filter #}
     {{ DISQUS_IDENTIFIER | disqusCount }}
 
-    {# Output the number of comments using the 'disqusEmbed' variable #}
+    {# Output the number of comments using the 'disqusCount' variable #}
     {{ craft.disqus.disqusCount(DISQUS_IDENTIFIER) }}
 
 To access comment counts, you will need [register an API application](https://help.disqus.com/customer/portal/articles/787016-how-to-create-an-api-application) first to obtain your API keys. You then will need to enter your API keys into the Disqus plugin settings.
