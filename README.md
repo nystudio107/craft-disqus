@@ -128,6 +128,8 @@ The Disqus plugin also allows you to display the number of comments a particular
     {# Output the number of comments using the 'disqusEmbed' variable #}
     {{ craft.disqus.disqusCount(DISQUS_IDENTIFIER, DISQUS_URL) }}
 
+To access comment counts, you will need [register an API application](https://help.disqus.com/customer/portal/articles/787016-how-to-create-an-api-application) first to obtain your API keys. You then will need to enter your API keys into the Disqus plugin settings.
+
 ## Disqus Multi-lingual websites
 
 By default, Disqus will use the language you have set in `Disqus Admin > Setup > Appearance`, however you can use it on [Multi-lingual websites](https://help.disqus.com/customer/portal/articles/466249-multi-lingual-websites) as well.
