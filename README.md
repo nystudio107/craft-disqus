@@ -52,13 +52,13 @@ You only need this is you want to have a custom login button displayed in the Di
 All of these methods accomplish the same thing:
 
     {# Output the Disqus embed code using the 'disqusEmbed' function #}
-    {{ disqusEmbed( DISQUS_IDENTIFIER, DISQUS_TITLE, DISQUS_URL, DISQUS_CATEGORY_ID, DISQUS_LANGUAGE) }}
+    {{ disqusEmbed(DISQUS_IDENTIFIER, DISQUS_TITLE, DISQUS_URL, DISQUS_CATEGORY_ID, DISQUS_LANGUAGE) }}
 
     {# Output the Disqus embed code using the 'disqusEmbed' filter #}
     {{ DISQUS_IDENTIFIER | disqusEmbed(DISQUS_TITLE, DISQUS_URL, DISQUS_CATEGORY_ID, DISQUS_LANGUAGE) }}
 
     {# Output the Disqus embed code using the 'disqusEmbed' variable #}
-    {{ craft.disqus.disqusEmbed( DISQUS_IDENTIFIER, DISQUS_TITLE, DISQUS_URL, DISQUS_CATEGORY_ID, DISQUS_LANGUAGE) }}
+    {{ craft.disqus.disqusEmbed(DISQUS_IDENTIFIER, DISQUS_TITLE, DISQUS_URL, DISQUS_CATEGORY_ID, DISQUS_LANGUAGE) }}
 
 All of the parameters except for `DISQUS_IDENTIFIER` are optional.  For more information on what these parameters are, please see [Javascript configuration variables](https://help.disqus.com/customer/portal/articles/472098-javascript-configuration-variables)
 
@@ -120,13 +120,13 @@ If you have "Use Custom Login/Logout URLs" turned on, it will also generate the 
 The Disqus plugin also allows you to display the number of comments a particular Disqus thread has received in your templates. All of these methods accomplish the same thing:
 
     {# Output the number of comments using the 'disqusEmbed' function #}
-    {{ disqusCount(DISQUS_IDENTIFIER, DISQUS_URL) }}
+    {{ disqusCount(DISQUS_IDENTIFIER) }}
 
     {# Output the number of comments using the 'disqusEmbed' filter #}
-    {{ DISQUS_IDENTIFIER | disqusCount(DISQUS_URL) }}
+    {{ DISQUS_IDENTIFIER | disqusCount }}
 
     {# Output the number of comments using the 'disqusEmbed' variable #}
-    {{ craft.disqus.disqusCount(DISQUS_IDENTIFIER, DISQUS_URL) }}
+    {{ craft.disqus.disqusCount(DISQUS_IDENTIFIER) }}
 
 To access comment counts, you will need [register an API application](https://help.disqus.com/customer/portal/articles/787016-how-to-create-an-api-application) first to obtain your API keys. You then will need to enter your API keys into the Disqus plugin settings.
 
