@@ -40,6 +40,7 @@ class DisqusTwigExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFilter('disqusEmbed', [$this, 'disqusEmbed']),
+            new \Twig_SimpleFilter('disqusCount', [$this, 'disqusCount']),
         ];
     }
 
@@ -50,6 +51,7 @@ class DisqusTwigExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFunction('disqusEmbed', [$this, 'disqusEmbed']),
+            new \Twig_SimpleFunction('disqusCount', [$this, 'disqusCount']),
         ];
     }
 
@@ -75,6 +77,22 @@ class DisqusTwigExtension extends \Twig_Extension
             $disqusUrl,
             $disqusCategoryId,
             $disqusLanguage
+        );
+    }
+    
+    /**
+     * @param string $disqusIdentifier
+     * @param string $disqusUrl
+     *
+     * @return mixed
+     */    
+    public function disqusCount(
+        $disqusIdentifier = "",
+        $disqusUrl = ""
+    ) {
+        return Disqus::$plugin->disqusService->getCommentsCount(
+            $disqusIdentifier,
+            $disqusUrl
         );
     }
 }

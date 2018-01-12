@@ -62,6 +62,49 @@ class DisqusService extends Component
 
         return $result;
     }
+    
+    /**
+     * Output the Disqus comments count
+     *
+     * @param string $disqusIdentifier
+     * @param string $disqusTitle
+     * @param string $disqusUrl
+     * @param string $disqusCategoryId
+     * @param string $disqusLanguage
+     *
+     * @return string
+     */
+    public function getCommentsCount(
+        $disqusIdentifier = "",
+        $disqusUrl = ""
+    ) {
+    
+      $settings = Disqus::$plugin->getSettings();
+      if (!empty($settings['disqusPublicKey'])){
+        $apiKey = $settings["disqusPublicKey"]; 
+      
+        $url = "https://disqus.com/api/3.0/threads/details.json?api_key=" . $apiKey . "&forum=" . $disqusIdentifier . "&thread:link=" . $disqusUrl;
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $return = curl_exec($ch);
+        curl_close($ch);
+        
+        $json = json_decode($return, true);
+        if($json["code"] == 0){
+            return $json["response"]["posts"];
+        }else{
+          Craft::error(Craft::t('disqus', $json["response"]), __METHOD__);
+          return 0;
+        }
+      }else{
+        Craft::error(Craft::t('disqus', "Public API Key missing"), __METHOD__);
+        return 0;
+      }
+    
+    }
 
     // Protected Methods
     // =========================================================================
