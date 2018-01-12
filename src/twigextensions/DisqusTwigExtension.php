@@ -13,8 +13,6 @@ namespace nystudio107\disqus\twigextensions;
 
 use nystudio107\disqus\Disqus;
 
-use Craft;
-
 /**
  * @author    nystudio107
  * @package   Disqus
@@ -62,7 +60,7 @@ class DisqusTwigExtension extends \Twig_Extension
      * @param string $disqusCategoryId
      * @param string $disqusLanguage
      *
-     * @return mixed
+     * @return string
      */
     public function disqusEmbed(
         $disqusIdentifier = "",
@@ -79,13 +77,13 @@ class DisqusTwigExtension extends \Twig_Extension
             $disqusLanguage
         );
     }
-    
+
     /**
      * @param string $disqusIdentifier
      * @param string $disqusUrl
      *
-     * @return mixed
-     */    
+     * @return int
+     */
     public function disqusCount(
         $disqusIdentifier = "",
         $disqusUrl = ""
