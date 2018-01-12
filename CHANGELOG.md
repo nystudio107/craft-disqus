@@ -1,5 +1,12 @@
 # Disqus Changelog
 
+## 1.0.6 - 2018.01.12
+### Added
+* Added the `disqusCount()` and `craft.disqus.disqusCount()` for getting the number of comments for a given Disqus thread
+
+### Changed
+* Cleaned up the code, added try/catch wrappers
+
 ## 1.0.5 - 2017.12.06
 ### Changed
 * Updated to require craftcms/cms `^3.0.0-RC1`
@@ -28,4 +35,4 @@
 
 ## 1.0.0 - 2017.03.18
 ### Added
-- Initial release
+* Initial release
