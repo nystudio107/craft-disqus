@@ -80,17 +80,14 @@ class DisqusTwigExtension extends \Twig_Extension
 
     /**
      * @param string $disqusIdentifier
-     * @param string $disqusUrl
      *
      * @return int
      */
     public function disqusCount(
-        $disqusIdentifier = "",
-        $disqusUrl = ""
+        $disqusIdentifier = ""
     ) {
         return Disqus::$plugin->disqusService->getCommentsCount(
-            $disqusIdentifier,
-            $disqusUrl
+            $disqusIdentifier
         );
     }
 }

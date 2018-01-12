@@ -70,24 +70,23 @@ class DisqusService extends Component
      * Return the number of comments for a particular thread
      *
      * @param string $disqusIdentifier
-     * @param string $disqusUrl
      *
      * @return int
      */
     public function getCommentsCount(
-        $disqusIdentifier = "",
-        $disqusUrl = ""
+        $disqusIdentifier = ""
     ) {
 
         $settings = Disqus::$plugin->getSettings();
         if (!empty($settings['disqusPublicKey'])) {
+            $disqusShortname = $settings['disqusShortname'];
             $apiKey = $settings["disqusPublicKey"];
 
             $url = "https://disqus.com/api/3.0/threads/details.json?api_key="
                 .$apiKey
-                ."&forum=".$disqusIdentifier
-                ."&thread:link="
-                .$disqusUrl;
+                ."&forum=".$disqusShortname
+                ."&thread:ident="
+                .$disqusIdentifier;
 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);

@@ -13,8 +13,6 @@ namespace nystudio107\disqus\variables;
 
 use nystudio107\disqus\Disqus;
 
-use Craft;
-
 /**
  * @author    nystudio107
  * @package   Disqus
@@ -52,17 +50,14 @@ class DisqusVariable
 
     /**
      * @param string $disqusIdentifier
-     * @param string $disqusUrl
      *
      * @return int
      */
     public function disqusCount(
-        $disqusIdentifier = "",
-        $disqusUrl = ""
+        $disqusIdentifier = ""
     ) {
         return Disqus::$plugin->disqusService->getCommentsCount(
-            $disqusIdentifier,
-            $disqusUrl
+            $disqusIdentifier
         );
     }
 }
