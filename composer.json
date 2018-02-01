@@ -1,8 +1,8 @@
 {
-    "name": "nystudio107/craft3-disqus",
+    "name": "nystudio107/craft-disqus",
     "description": "Integrates the Disqus commenting system into Craft 3 websites, including Single Sign On (SSO) and custom login/logout URLs",
     "type": "craft-plugin",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "keywords": [
         "craft",
         "cms",
@@ -11,8 +11,8 @@
         "disqus"
     ],
     "support": {
-        "docs": "https://github.com/nystudio107/craft3-disqus/blob/master/README.md",
-        "issues": "https://github.com/nystudio107/craft3-disqus/issues"
+        "docs": "https://github.com/nystudio107/craft-disqus/blob/master/README.md",
+        "issues": "https://github.com/nystudio107/craft-disqus/issues"
     },
     "license": "MIT",
     "authors": [
@@ -35,7 +35,7 @@
         "schemaVersion": "1.0.0",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/nystudio107/craft3-disqus/master/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/nystudio107/craft-disqus/master/CHANGELOG.md",
         "components": {
             "disqusService": "nystudio107\\disqus\\services\\DisqusService"
         },
