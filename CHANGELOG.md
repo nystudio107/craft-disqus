@@ -1,5 +1,9 @@
 # Disqus Changelog
 
+## 1.0.7 - 2018.02.01
+### Added
+* Renamed the composer package name to `craft-disqus`
+
 ## 1.0.6 - 2018.01.12
 ### Added
 * Added the `disqusCount()` and `craft.disqus.disqusCount()` for getting the number of comments for a given Disqus thread
