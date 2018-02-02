@@ -11,7 +11,7 @@
         "disqus"
     ],
     "support": {
-        "docs": "https://github.com/nystudio107/craft-disqus/blob/master/README.md",
+        "docs": "https://github.com/nystudio107/craft-disqus/blob/v1/README.md",
         "issues": "https://github.com/nystudio107/craft-disqus/issues"
     },
     "license": "MIT",
@@ -35,7 +35,7 @@
         "schemaVersion": "1.0.0",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/nystudio107/craft-disqus/master/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/nystudio107/craft-disqus/v1/CHANGELOG.md",
         "components": {
             "disqusService": "nystudio107\\disqus\\services\\DisqusService"
         },
