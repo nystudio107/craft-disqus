@@ -1,3 +1,5 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/badges/quality-score.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/?branch=v1) [![Code Coverage](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/badges/coverage.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/?branch=v1) [![Build Status](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/badges/build.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/build-status/v1) [![Code Intelligence Status](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/badges/code-intelligence.svg?b=v1)](https://scrutinizer-ci.com/code-intelligence)
+
 # Disqus plugin for Craft CMS 3.x
 
 Integrates the Disqus commenting system into Craft 3 websites, including Single Sign On (SSO) and custom login/logout URLs
@@ -16,6 +18,8 @@ To install Disqus, follow these steps:
 
 1. Install with Composer via `composer require nystudio107/craft-disqus` from your project directory
 2. Install plugin in the Craft Control Panel under Settings > Plugins
+
+You can also install Disqus via the **Plugin Store** in the Craft AdminCP.
 
 Disqus works on Craft 3.x.
 
