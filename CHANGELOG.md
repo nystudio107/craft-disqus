@@ -1,5 +1,9 @@
 # Disqus Changelog
 
+## 1.1.0 - 2019.01.04
+### Added
+* Disqus JavaScript is now lazy loaded, only when the comments scroll into the viewport
+
 ## 1.0.7 - 2018.02.01
 ### Added
 * Renamed the composer package name to `craft-disqus`
