@@ -34,14 +34,77 @@
         {% endif -%}
 
     };
+    // Lazy load the Disqus JavaScript as per https://www.samclarke.com/lazy-loading-disqus/
+    (function (doc, win) {
+        var script;
+        var isLoaded;
+        var element;
+        var eventCallback;
+        var threashold = win.innerHeight * .75;
 
-    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
-        var d = document, s = d.createElement('script');
+        if (element) {
+            addEventListener('scroll', eventCallback);
+            addEventListener('resize', eventCallback);
+        }
 
-        s.src = '//{{ disqusShortname }}.disqus.com/embed.js';  // IMPORTANT: Replace EXAMPLE with your forum shortname!
+        function throttle(fn, delay) {
+            var lastCalled = 0;
+            var timeout;
 
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
+            return function () {
+                var now = +new Date;
+                var remaining = delay - (now - lastCalled);
+                var args = arguments;
+
+                clearTimeout(timeout);
+
+                if (remaining > 0) {
+                    timeout = setTimeout(function () {
+                        lastCalled = now;
+                        fn.apply(null, args);
+                    }, remaining);
+                } else {
+                    lastCalled = now;
+                    fn.apply(null, args);
+                }
+            };
+        }
+
+        function isPassedThreashold() {
+            var top = element.getBoundingClientRect().top;
+            return top - win.innerHeight <= threashold;
+        }
+
+        function lazyLoad() {
+            if (!isLoaded && isPassedThreashold()) {
+                removeEventListener('scroll', eventCallback);
+                removeEventListener('resize', eventCallback);
+
+                script = doc.createElement('script');
+                script.async = true;
+                script.src = '//{{ disqusShortname }}.disqus.com/embed.js';  // IMPORTANT: Replace EXAMPLE with your forum shortname!
+                script.setAttribute('data-timestamp', +new Date());
+
+                element.innerHTML = 'Loading comments...';
+
+                (doc.head || doc.body).appendChild(script);
+
+                isLoaded = true;
+            }
+        }
+
+        win.disqusLazy = function (opts) {
+            opts = opts || {};
+            eventCallback = throttle(lazyLoad, opts.throttle || 100);
+            element = opts.element || doc.getElementById('disqus_thread');
+            threashold = opts.threashold || win.innerHeight * .75;
+
+            if (element) {
+                addEventListener('scroll', eventCallback);
+                addEventListener('resize', eventCallback);
+            }
+        };
+    }(document, window));
+    disqusLazy();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>

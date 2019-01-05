@@ -27,7 +27,7 @@ Disqus works on Craft 3.x.
 
 First, make sure you have [set up a Disqus account](https://disqus.com/websites/).
 
-Next in the Craft Admin CP, go to Settings->Plugins->Disqus and enter the Short Name for your Disqus site.  This is the only required setting for the Disqus plugin.
+Next in the Craft Control Panel, go to Settings->Plugins->Disqus and enter the Short Name for your Disqus site.  This is the only required setting for the Disqus plugin.
 
 All settings are also configurable via the `config.php` file, which is a multi-environment friendly way to store the default settings.  Don't edit this file, instead copy it to `craft/config` as `disqus.php` and make your changes there.
 
@@ -108,7 +108,7 @@ In its most basic case, this will result in output to your Craft template that l
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
-The `DISQUS_SHORTNAME` setting is taken from the Admin CP or `config.php` settings, and the rest of the `DISQUS_*` settings are passed in as variables from the `disqusEmbed` Twig filter/function.
+The `DISQUS_SHORTNAME` setting is taken from the Control Panel or `config.php` settings, and the rest of the `DISQUS_*` settings are passed in as variables from the `disqusEmbed` Twig filter/function.
 
 If you have turned on "Use Single Sign On" it will also output something like this in the above tag:
 

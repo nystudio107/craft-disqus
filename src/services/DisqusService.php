@@ -191,7 +191,7 @@ class DisqusService extends Component
      */
     protected function renderPluginTemplate($templatePath, $vars)
     {
-        // Stash the old template mode, and set it AdminCP template mode
+        // Stash the old template mode, and set it Control Panel template mode
         $oldMode = Craft::$app->view->getTemplateMode();
         try {
             Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
