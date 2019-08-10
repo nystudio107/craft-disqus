@@ -1,5 +1,9 @@
 # Disqus Changelog
 
+## 1.1.1 - 2019.08.10
+### Changed
+* Fixed a deprecation error for `craft.config.get()`
+
 ## 1.1.0 - 2019.01.04
 ### Added
 * Disqus JavaScript is now lazy loaded, only when the comments scroll into the viewport
