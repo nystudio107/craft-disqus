@@ -15,6 +15,9 @@ use nystudio107\disqus\Disqus;
 
 use Craft;
 use craft\base\Model;
+use craft\behaviors\EnvAttributeParserBehavior;
+
+use yii\behaviors\AttributeTypecastBehavior;
 
 /**
  * @author    nystudio107
@@ -120,5 +123,32 @@ class Settings extends Model
             ['loginHeight', 'integer', 'min' => 200, 'max' => 1000],
             ['loginHeight', 'default', 'value' => 400],
         ];
+    }
+
+
+    /**
+     * @return array
+     */
+    public function behaviors()
+    {
+        $craft31Behaviors = [];
+        if (Disqus::$craft31) {
+            $craft31Behaviors = [
+                'parser' => [
+                    'class' => EnvAttributeParserBehavior::class,
+                    'attributes' => [
+                        'disqusPublicKey',
+                        'disqusSecretKey',
+                    ],
+                ]
+            ];
+        }
+
+        return array_merge($craft31Behaviors, [
+            'typecast' => [
+                'class' => AttributeTypecastBehavior::class,
+                // 'attributeTypes' will be composed automatically according to `rules()`
+            ],
+        ]);
     }
 }

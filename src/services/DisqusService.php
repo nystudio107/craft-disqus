@@ -78,6 +78,10 @@ class DisqusService extends Component
     ) {
 
         $settings = Disqus::$plugin->getSettings();
+        if (Disqus::$craft31) {
+            $settings['disqusPublicKey'] = Craft::parseEnv($settings['disqusPublicKey']);
+            $settings['disqusSecretKey'] = Craft::parseEnv($settings['disqusSecretKey']);
+        }
         if (!empty($settings['disqusPublicKey'])) {
             $disqusShortname = $settings['disqusShortname'];
             $apiKey = $settings["disqusPublicKey"];
