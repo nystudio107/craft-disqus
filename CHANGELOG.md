@@ -1,6 +1,9 @@
 # Disqus Changelog
 
 ## 1.1.1 - 2019.08.10
+### Added
+* `disqusPublicKey` and `disqusSecretKey` can now be environmental variables
+
 ### Changed
 * Fixed a deprecation error for `craft.config.get()`
 
