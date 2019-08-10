@@ -60,4 +60,14 @@ class DisqusVariable
             $disqusIdentifier
         );
     }
+
+    /**
+     * Return whether we are running Craft 3.1 or later
+     *
+     * @return bool
+     */
+    public function craft31(): bool
+    {
+        return Disqus::$craft31;
+    }
 }

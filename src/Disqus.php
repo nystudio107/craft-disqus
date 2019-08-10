@@ -41,6 +41,11 @@ class Disqus extends Plugin
      */
     public static $plugin;
 
+    /**
+     * @var bool
+     */
+    public static $craft31 = false;
+
     // Public Methods
     // =========================================================================
 
@@ -51,6 +56,9 @@ class Disqus extends Plugin
     {
         parent::init();
         self::$plugin = $this;
+
+        // Version helpers
+        self::$craft31 = version_compare(Craft::$app->getVersion(), '3.1', '>=');
 
         Event::on(
             CraftVariable::class,

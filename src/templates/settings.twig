@@ -1,11 +1,12 @@
 {% import "_includes/forms" as forms %}
 
-{% macro configWarning(setting) -%}
-    {% if (craft.config.get(setting, 'disqus')) |length %}
-        {{ "This is being overridden by the {setting} config setting in your disqus.php config file." |t({
-            setting: setting
-        }) |raw }}
-    {% endif %}
+{% macro configWarning(setting, file='disqus') -%}
+    {%- set configArray = craft.app.config.getConfigFromFile(file) -%}
+    {%- if configArray[setting] is defined -%}
+        {{- "This is being overridden by the `#{setting}` setting in the `config/#{file}.php` file." |raw }}
+    {%- else -%}
+        {{ false }}
+    {%- endif -%}
 {%- endmacro %}
 {% from _self import configWarning %}
 
@@ -31,23 +32,44 @@
     'warning': configWarning('useSSO')
 }) }}
 
-{{ forms.textField({
-    'label': 'Disqus Public Key (API Key)',
-    'instructions': 'Enter your Disqus API Key.',
-    'id': 'disqusPublicKey',
-    'name': 'disqusPublicKey',
-    'value': settings['disqusPublicKey'],
-    'warning': configWarning('disqusPublicKey')
-}) }}
+{% if craft.imageOptimize.craft31 %}
+    {{ forms.autosuggestField({
+        'label': 'Disqus Public Key (API Key)',
+        'instructions': 'Enter your Disqus API Key.',
+        suggestEnvVars: true,
+        'id': 'disqusPublicKey',
+        'name': 'disqusPublicKey',
+        'value': settings['disqusPublicKey'],
+        'warning': configWarning('disqusPublicKey')
+    }) }}
+    {{ forms.autosuggestField({
+        'label': 'Disqus Secret Key (API Secret)',
+        'instructions': 'Enter your Disqus Secret Key (API Secret).',
+        suggestEnvVars: true,
+        'id': 'disqusSecretKey',
+        'name': 'disqusSecretKey',
+        'value': settings['disqusSecretKey'],
+        'warning': configWarning('disqusSecretKey')
+    }) }}
+{% else %}
+    {{ forms.textField({
+        'label': 'Disqus Public Key (API Key)',
+        'instructions': 'Enter your Disqus API Key.',
+        'id': 'disqusPublicKey',
+        'name': 'disqusPublicKey',
+        'value': settings['disqusPublicKey'],
+        'warning': configWarning('disqusPublicKey')
+    }) }}
 
-{{ forms.textField({
-    'label': 'Disqus Secret Key (API Secret)',
-    'instructions': 'Enter your .',
-    'id': 'disqusSecretKey',
-    'name': 'disqusSecretKey',
-    'value': settings['disqusSecretKey'],
-    'warning': configWarning('disqusSecretKey')
-}) }}
+    {{ forms.textField({
+        'label': 'Disqus Secret Key (API Secret)',
+        'instructions': 'Enter your Disqus Secret Key (API Secret).',
+        'id': 'disqusSecretKey',
+        'name': 'disqusSecretKey',
+        'value': settings['disqusSecretKey'],
+        'warning': configWarning('disqusSecretKey')
+    }) }}
+{% endif %}
 
 <hr />
 
