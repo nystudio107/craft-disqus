@@ -1,5 +1,9 @@
 # Disqus Changelog
 
+## 1.1.2 - 2019.08.15
+### Added
+* Fixed a regression that could cause an exception to be thrown when editing the plugin settings
+
 ## 1.1.1 - 2019.08.10
 ### Added
 * `disqusPublicKey` and `disqusSecretKey` can now be environmental variables
