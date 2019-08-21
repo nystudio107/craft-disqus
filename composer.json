@@ -11,8 +11,8 @@
         "disqus"
     ],
     "support": {
-        "docs": "https://github.com/nystudio107/craft-disqus/blob/v1/README.md",
-        "issues": "https://github.com/nystudio107/craft-disqus/issues"
+        "docs": "https://nystudio107.com/plugins/disqus/documentation",
+        "issues": "https://nystudio107.com/plugins/disqus/support"
     },
     "license": "MIT",
     "authors": [
