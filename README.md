@@ -4,7 +4,7 @@
 
 Integrates the Disqus commenting system into Craft 3 websites, including Single Sign On (SSO) and custom login/logout URLs
 
-![Screenshot](./docs/resources/img/plugin-logo.png)
+![Screenshot](./docs/docs/resources/img/plugin-logo.png)
 
 Related: [Disqus for Craft 2.x](https://github.com/nystudio107/disqus)
 
