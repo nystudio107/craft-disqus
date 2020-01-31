@@ -172,10 +172,10 @@ class DisqusService extends Component
                 $vars = array_merge($vars, [
                     'useCustomLogin' => true,
                     'loginName'      => $settings['loginName'],
-                    'loginButton'    => $settings['loginButton'],
-                    'loginIcon'      => $settings['loginIcon'],
-                    'loginUrl'       => $settings['loginUrl'],
-                    'loginLogoutUrl' => $settings['loginLogoutUrl'],
+                    'loginButton'    => Craft::getAlias($settings['loginButton']),
+                    'loginIcon'      => Craft::getAlias($settings['loginIcon']),
+                    'loginUrl'       => Craft::getAlias($settings['loginUrl']),
+                    'loginLogoutUrl' => Craft::getAlias($settings['loginLogoutUrl']),
                     'loginWidth'     => $settings['loginWidth'],
                     'loginHeight'    => $settings['loginHeight'],
                 ]);
