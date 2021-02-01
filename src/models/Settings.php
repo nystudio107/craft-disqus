@@ -93,6 +93,102 @@ class Settings extends Model
     // =========================================================================
 
     /**
+     * @return string the parsed secret key (e.g. 'XXXXXXXXXXX')
+     */
+    public function getDisqusSecretKey(): string
+    {
+        return Disqus::$craft31 ? Craft::parseEnv($this->disqusSecretKey) : $this->disqusSecretKey;
+    }
+
+    /**
+     * @return string the parsed public key (e.g. 'XXXXXXXXXXX')
+     */
+    public function getDisqusPublicKey(): string
+    {
+        return Disqus::$craft31 ? Craft::parseEnv($this->disqusPublicKey) : $this->disqusPublicKey;
+    }
+
+    /**
+     * @return string 
+     */
+    public function getDisqusShortname(): string
+    {
+        return $this->disqusShortname;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getUseSSO(): bool
+    {
+        return $this->useSSO;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCustomLogin(): bool
+    {
+        return $this->customLogin;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoginName(): string
+    {
+        return Disqus::$craft31 ? Craft::parseEnv($this->loginName) : $this->loginName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoginButton(): string
+    {
+        return Disqus::$craft31 ? Craft::parseEnv($this->loginButton) : $this->loginButton;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoginIcon(): string
+    {
+        return Disqus::$craft31 ? Craft::parseEnv($this->loginIcon) : $this->loginIcon;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoginUrl(): string
+    {
+        return Disqus::$craft31 ? Craft::parseEnv($this->loginUrl) : $this->loginUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoginLogoutUrl(): string
+    {
+        return Disqus::$craft31 ? Craft::parseEnv($this->loginLogoutUrl) : $this->loginLogoutUrl;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLoginWidth(): int
+    {
+        return $this->loginWidth;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLoginHeight(): int
+    {
+        return $this->loginHeight;
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
@@ -137,6 +233,11 @@ class Settings extends Model
                 'parser' => [
                     'class' => EnvAttributeParserBehavior::class,
                     'attributes' => [
+                        'loginName',
+                        'loginButton',
+                        'loginIcon',
+                        'loginUrl',
+                        'loginLogoutUrl',
                         'disqusPublicKey',
                         'disqusSecretKey',
                     ],
