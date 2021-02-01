@@ -84,50 +84,102 @@
     'warning': configWarning('customLogin')
 }) }}
 
-{{ forms.textField({
-    'label': 'name',
-    'instructions': 'Your site name. We will display it in the Post As window.',
-    'id': 'loginName',
-    'name': 'loginName',
-    'value': settings['loginName'],
-    'warning': configWarning('loginName')
-}) }}
+{% if craft.disqus.craft31 %}
+    {{ forms.autosuggestField({
+        'label': 'name',
+        'instructions': 'Your site name. We will display it in the Post As window.',
+        'id': 'loginName',
+        'name': 'loginName',
+        'value': settings['loginName'],
+        'warning': configWarning('loginName'),
+        suggestEnvVars: true,
+    }) }}
+    {{ forms.autosuggestField({
+        'label': 'button',
+        'instructions': 'Address of the image that acts as a button. Disqus 2012 users, see style guide below.',
+        'id': 'loginButton',
+        'name': 'loginButton',
+        'value': settings['loginButton'],
+        'warning': configWarning('loginButton'),
+        suggestEnvVars: true,
+        suggestAliases: true
+    }) }}
+    {{ forms.autosuggestField({
+        'label': 'icon',
+        'instructions': 'Address of the image that appears on the login modal SSO tab. Favicons work well here. (Not required in Disqus 2012.)',
+        'id': 'loginIcon',
+        'name': 'loginIcon',
+        'value': settings['loginIcon'],
+        'warning': configWarning('loginIcon'),
+        suggestEnvVars: true,
+        suggestAliases: true
+    }) }}
+    {{ forms.autosuggestField({
+        'label': 'url',
+        'instructions': 'Address of your login page. The page will be opened in a new window and it must close itself after authentication is done. That is how we know when it is done and reload the page.',
+        'id': 'loginUrl',
+        'name': 'loginUrl',
+        'value': settings['loginUrl'],
+        'warning': configWarning('loginUrl'),
+        suggestEnvVars: true,
+        suggestAliases: true
+    }) }}
+    {{ forms.autosuggestField({
+        'label': 'logout',
+        'instructions': 'Address of your logout page. This page must redirect user back to the original page after logout.',
+        'id': 'loginLogoutUrl',
+        'name': 'loginLogoutUrl',
+        'value': settings['loginLogoutUrl'],
+        'warning': configWarning('loginLogoutUrl'),
+        suggestEnvVars: true,
+        suggestAliases: true
+    }) }}
+{% else %}
+    {{ forms.textField({
+        'label': 'name',
+        'instructions': 'Your site name. We will display it in the Post As window.',
+        'id': 'loginName',
+        'name': 'loginName',
+        'value': settings['loginName'],
+        'warning': configWarning('loginName')
+    }) }}
 
-{{ forms.textField({
-    'label': 'button',
-    'instructions': 'Address of the image that acts as a button. Disqus 2012 users, see style guide below.',
-    'id': 'loginButton',
-    'name': 'loginButton',
-    'value': settings['loginButton'],
-    'warning': configWarning('loginButton')
-}) }}
+    {{ forms.textField({
+        'label': 'button',
+        'instructions': 'Address of the image that acts as a button. Disqus 2012 users, see style guide below.',
+        'id': 'loginButton',
+        'name': 'loginButton',
+        'value': settings['loginButton'],
+        'warning': configWarning('loginButton')
+    }) }}
 
-{{ forms.textField({
-    'label': 'icon',
-    'instructions': 'Address of the image that appears on the login modal SSO tab. Favicons work well here. (Not required in Disqus 2012.)',
-    'id': 'loginIcon',
-    'name': 'loginIcon',
-    'value': settings['loginIcon'],
-    'warning': configWarning('loginIcon')
-}) }}
+    {{ forms.textField({
+        'label': 'icon',
+        'instructions': 'Address of the image that appears on the login modal SSO tab. Favicons work well here. (Not required in Disqus 2012.)',
+        'id': 'loginIcon',
+        'name': 'loginIcon',
+        'value': settings['loginIcon'],
+        'warning': configWarning('loginIcon')
+    }) }}
 
-{{ forms.textField({
-    'label': 'url',
-    'instructions': 'Address of your login page. The page will be opened in a new window and it must close itself after authentication is done. That is how we know when it is done and reload the page.',
-    'id': 'loginUrl',
-    'name': 'loginUrl',
-    'value': settings['loginUrl'],
-    'warning': configWarning('loginUrl')
-}) }}
+    {{ forms.textField({
+        'label': 'url',
+        'instructions': 'Address of your login page. The page will be opened in a new window and it must close itself after authentication is done. That is how we know when it is done and reload the page.',
+        'id': 'loginUrl',
+        'name': 'loginUrl',
+        'value': settings['loginUrl'],
+        'warning': configWarning('loginUrl')
+    }) }}
 
-{{ forms.textField({
-    'label': 'logout',
-    'instructions': 'Address of your logout page. This page must redirect user back to the original page after logout.',
-    'id': 'loginLogoutUrl',
-    'name': 'loginLogoutUrl',
-    'value': settings['loginLogoutUrl'],
-    'warning': configWarning('loginLogoutUrl')
-}) }}
+    {{ forms.textField({
+        'label': 'logout',
+        'instructions': 'Address of your logout page. This page must redirect user back to the original page after logout.',
+        'id': 'loginLogoutUrl',
+        'name': 'loginLogoutUrl',
+        'value': settings['loginLogoutUrl'],
+        'warning': configWarning('loginLogoutUrl')
+    }) }}
+{% endif %}
 
 {{ forms.textField({
     'label': 'width',
