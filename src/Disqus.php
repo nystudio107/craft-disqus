@@ -46,6 +46,39 @@ class Disqus extends Plugin
      */
     public static $craft31 = false;
 
+    // Public Properties
+    // =========================================================================
+
+    /**
+     * @var string
+     */
+    public $schemaVersion = '1.0.0';
+
+    /**
+     * @var bool
+     */
+    public $hasCpSection = false;
+
+    /**
+     * @var bool
+     */
+    public $hasCpSettings = true;
+
+    // Static Methods
+    // =========================================================================
+
+    /**
+     * @inheritdoc
+     */
+    public function __construct($id, $parent = null, array $config = [])
+    {
+        $config['components'] = [
+            'disqusService' => DisqusService::class,
+        ];
+
+        parent::__construct($id, $parent, $config);
+    }
+
     // Public Methods
     // =========================================================================
 
