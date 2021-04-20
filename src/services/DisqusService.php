@@ -100,10 +100,10 @@ class DisqusService extends Component
             curl_close($ch);
 
             $json = json_decode($return, true);
-            if ($json["code"] == 0) {
+            if ($json !== null && !empty($json["code"]) && $json["code"] == 0) {
                 return $json["response"]["posts"];
             } else {
-                Craft::error(Craft::t('disqus', $json["response"]), __METHOD__);
+                Craft::error(Craft::t('disqus', print_r($json, true)), __METHOD__);
 
                 return 0;
             }
