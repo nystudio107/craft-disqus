@@ -1,0 +1,36 @@
+{
+  "author": {
+    "email": "andrew@nystudio107.com",
+    "name": "Andrew Welch",
+    "url": "https://nystudio107.com"
+  },
+  "browser": "./src/Disqus.php",
+  "bugs": {
+    "email": "andrew@nystudio107.com",
+    "url": "https://nystudio107.com"
+  },
+  "dependencies": {
+  },
+  "description": "Integrates the Disqus commenting system into Craft 3 websites, including Single Sign On (SSO) and custom login/logout URLs",
+  "devDependencies": {
+ },
+  "homepage": "https://nystudio107.com",
+  "keywords": [
+    "disqus",
+    "craftcms",
+    "craft",
+    "cms",
+    "plugin"
+  ],
+  "license": "SEE LICENSE IN LICENSE.md",
+  "name": "disqus",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nystudio107/craft-disqus.git"
+  },
+  "scripts": {
+    "docs": "cd ../docs && rm -f package-lock.json && npm install && npm update && npm run docs:build"
+  },
+  "version": "1.1.13"
+}

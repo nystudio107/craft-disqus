@@ -1,5 +1,15 @@
 # Disqus Changelog
 
+## 1.1.3 - 2021.04.20
+### Added
+* Added Dockerfile & Makefile for building docs
+
+### Changed
+* Move settings from the `composer.json` “extra” to the plugin main class
+
+### Fixed
+* Fixed an issue where an error was thrown if a `null` value was returned from `json_encode`
+
 ## 1.1.2 - 2019.08.15
 ### Added
 * Fixed a regression that could cause an exception to be thrown when editing the plugin settings
