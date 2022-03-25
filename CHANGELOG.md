@@ -1,5 +1,11 @@
 # Disqus Changelog
 
+## 4.0.0-beta.1 - 2022.03.25
+
+### Added
+
+* Initial Craft CMS 4 compatibility
+
 ## 1.1.3 - 2021.04.20
 ### Added
 * Added Dockerfile & Makefile for building docs

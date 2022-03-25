@@ -1,38 +1,38 @@
 {
-    "name": "nystudio107/craft-disqus",
-    "description": "Integrates the Disqus commenting system into Craft 3 websites, including Single Sign On (SSO) and custom login/logout URLs",
-    "type": "craft-plugin",
-    "version": "1.1.3",
-    "keywords": [
-        "craft",
-        "cms",
-        "craftcms",
-        "craft-plugin",
-        "disqus"
-    ],
-    "support": {
-        "docs": "https://nystudio107.com/plugins/disqus/documentation",
-        "issues": "https://nystudio107.com/plugins/disqus/support"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "nystudio107",
-            "homepage": "https://nystudio107.com"
-        }
-    ],
-    "require": {
-        "craftcms/cms": "^3.0.0"
-    },
-    "autoload": {
-        "psr-4": {
-          "nystudio107\\disqus\\": "src/"
-        }
-    },
-    "extra": {
-        "name": "Disqus",
-        "handle": "disqus",
-        "changelogUrl": "https://raw.githubusercontent.com/nystudio107/craft-disqus/v1/CHANGELOG.md",
-        "class": "nystudio107\\disqus\\Disqus"
+  "name": "nystudio107/craft-disqus",
+  "description": "Integrates the Disqus commenting system into Craft 3 websites, including Single Sign On (SSO) and custom login/logout URLs",
+  "type": "craft-plugin",
+  "version": "4.0.0-beta.1",
+  "keywords": [
+    "craft",
+    "cms",
+    "craftcms",
+    "craft-plugin",
+    "disqus"
+  ],
+  "support": {
+    "docs": "https://nystudio107.com/docs/disqus/",
+    "issues": "https://nystudio107.com/plugins/disqus/support",
+    "source": "https://github.com/nystudio107/craft-disqus"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "nystudio107",
+      "homepage": "https://nystudio107.com"
     }
+  ],
+  "require": {
+    "craftcms/cms": "^4.0.0-beta.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "nystudio107\\disqus\\": "src/"
+    }
+  },
+  "extra": {
+    "class": "nystudio107\\disqus\\Disqus",
+    "handle": "disqus",
+    "name": "Disqus"
+  }
 }
