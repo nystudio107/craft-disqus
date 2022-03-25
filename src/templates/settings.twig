@@ -19,9 +19,11 @@
     'warning': configWarning('disqusShortname')
 }) }}
 
-<hr />
+<hr/>
 
-<p>Please see <a href="https://help.disqus.com/customer/portal/articles/236206-integrating-single-sign-on" target="_blank">Integrating Single Sign-On</a> for details on how to set up your Disqus account to use SSO</p>
+<p>Please see <a href="https://help.disqus.com/customer/portal/articles/236206-integrating-single-sign-on"
+                 target="_blank">Integrating Single Sign-On</a> for details on how to set up your Disqus account to use
+    SSO</p>
 
 {{ forms.lightswitchField({
     'label': 'Use Single Sign On',
@@ -32,48 +34,29 @@
     'warning': configWarning('useSSO')
 }) }}
 
-{% if craft.disqus.craft31 %}
-    {{ forms.autosuggestField({
-        'label': 'Disqus Public Key (API Key)',
-        'instructions': 'Enter your Disqus API Key.',
-        suggestEnvVars: true,
-        'id': 'disqusPublicKey',
-        'name': 'disqusPublicKey',
-        'value': settings['disqusPublicKey'],
-        'warning': configWarning('disqusPublicKey')
-    }) }}
-    {{ forms.autosuggestField({
-        'label': 'Disqus Secret Key (API Secret)',
-        'instructions': 'Enter your Disqus Secret Key (API Secret).',
-        suggestEnvVars: true,
-        'id': 'disqusSecretKey',
-        'name': 'disqusSecretKey',
-        'value': settings['disqusSecretKey'],
-        'warning': configWarning('disqusSecretKey')
-    }) }}
-{% else %}
-    {{ forms.textField({
-        'label': 'Disqus Public Key (API Key)',
-        'instructions': 'Enter your Disqus API Key.',
-        'id': 'disqusPublicKey',
-        'name': 'disqusPublicKey',
-        'value': settings['disqusPublicKey'],
-        'warning': configWarning('disqusPublicKey')
-    }) }}
+{{ forms.autosuggestField({
+    'label': 'Disqus Public Key (API Key)',
+    'instructions': 'Enter your Disqus API Key.',
+    suggestEnvVars: true,
+    'id': 'disqusPublicKey',
+    'name': 'disqusPublicKey',
+    'value': settings['disqusPublicKey'],
+    'warning': configWarning('disqusPublicKey')
+}) }}
+{{ forms.autosuggestField({
+    'label': 'Disqus Secret Key (API Secret)',
+    'instructions': 'Enter your Disqus Secret Key (API Secret).',
+    suggestEnvVars: true,
+    'id': 'disqusSecretKey',
+    'name': 'disqusSecretKey',
+    'value': settings['disqusSecretKey'],
+    'warning': configWarning('disqusSecretKey')
+}) }}
 
-    {{ forms.textField({
-        'label': 'Disqus Secret Key (API Secret)',
-        'instructions': 'Enter your Disqus Secret Key (API Secret).',
-        'id': 'disqusSecretKey',
-        'name': 'disqusSecretKey',
-        'value': settings['disqusSecretKey'],
-        'warning': configWarning('disqusSecretKey')
-    }) }}
-{% endif %}
+<hr/>
 
-<hr />
-
-<p>Please see <a href="https://help.disqus.com/customer/portal/articles/236206-integrating-single-sign-on#sso-login" target="_blank">Adding your own SSO login and logout links</a> for details.</p>
+<p>Please see <a href="https://help.disqus.com/customer/portal/articles/236206-integrating-single-sign-on#sso-login"
+                 target="_blank">Adding your own SSO login and logout links</a> for details.</p>
 
 {{ forms.lightswitchField({
     'label': 'Use Custom Login/Logout URLs',

@@ -11,15 +11,14 @@
 
 namespace nystudio107\disqus\services;
 
-use nystudio107\disqus\Disqus;
-
 use Craft;
 use craft\base\Component;
+use craft\helpers\App;
 use craft\helpers\Template;
 use craft\web\View;
-
+use nystudio107\disqus\Disqus;
+use nystudio107\disqus\models\Settings;
 use yii\base\Exception;
-use yii\base\InvalidConfigException;
 
 /**
  * @author    nystudio107
@@ -43,27 +42,28 @@ class DisqusService extends Component
      * @return string
      */
     public function outputEmbedTag(
-        $disqusIdentifier = "",
-        $disqusTitle = "",
-        $disqusUrl = "",
-        $disqusCategoryId = "",
-        $disqusLanguage = ""
-    ) {
+        string $disqusIdentifier = "",
+        string $disqusTitle = "",
+        string $disqusUrl = "",
+        string $disqusCategoryId = "",
+        string $disqusLanguage = ""
+    ): string
+    {
+        /* @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
-        $disqusShortname = $settings['disqusShortname'];
+        $disqusShortname = $settings->disqusShortname;
 
         $vars = [
-            'disqusShortname'  => $disqusShortname,
+            'disqusShortname' => $disqusShortname,
             'disqusIdentifier' => $disqusIdentifier,
-            'disqusTitle'      => $disqusTitle,
-            'disqusUrl'        => $disqusUrl,
+            'disqusTitle' => $disqusTitle,
+            'disqusUrl' => $disqusUrl,
             'disqusCategoryId' => $disqusCategoryId,
-            'disqusLanguage'   => $disqusLanguage,
+            'disqusLanguage' => $disqusLanguage,
         ];
         $vars = array_merge($vars, $this->getSSOVars());
-        $result = $this->renderPluginTemplate('disqusEmbedTag', $vars);
 
-        return $result;
+        return $this->renderPluginTemplate('disqusEmbedTag', $vars);
     }
 
     /**
@@ -72,25 +72,25 @@ class DisqusService extends Component
      * @param string $disqusIdentifier
      *
      * @return int
+     * @noinspection PhpComposerExtensionStubsInspection
      */
     public function getCommentsCount(
-        $disqusIdentifier = ""
-    ) {
-
+        string $disqusIdentifier = ""
+    ): int
+    {
+        /* @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
-        if (Disqus::$craft31) {
-            $settings['disqusPublicKey'] = Craft::parseEnv($settings['disqusPublicKey']);
-            $settings['disqusSecretKey'] = Craft::parseEnv($settings['disqusSecretKey']);
-        }
+        $settings->disqusPublicKey = App::parseEnv($settings['disqusPublicKey']);
+        $settings->disqusSecretKey = App::parseEnv($settings['disqusSecretKey']);
         if (!empty($settings['disqusPublicKey'])) {
             $disqusShortname = $settings['disqusShortname'];
             $apiKey = $settings["disqusPublicKey"];
 
             $url = "https://disqus.com/api/3.0/threads/details.json?api_key="
-                .$apiKey
-                ."&forum=".$disqusShortname
-                ."&thread:ident="
-                .$disqusIdentifier;
+                . $apiKey
+                . "&forum=" . $disqusShortname
+                . "&thread:ident="
+                . $disqusIdentifier;
 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
@@ -102,16 +102,14 @@ class DisqusService extends Component
             $json = json_decode($return, true);
             if ($json !== null && !empty($json["code"]) && $json["code"] == 0) {
                 return $json["response"]["posts"];
-            } else {
-                Craft::error(Craft::t('disqus', print_r($json, true)), __METHOD__);
-
-                return 0;
             }
-        } else {
-            Craft::error(Craft::t('disqus', "Public API Key missing"), __METHOD__);
+            Craft::error(Craft::t('disqus', print_r($json, true)), __METHOD__);
 
             return 0;
         }
+        Craft::error(Craft::t('disqus', "Public API Key missing"), __METHOD__);
+
+        return 0;
     }
 
     // Protected Methods
@@ -124,9 +122,10 @@ class DisqusService extends Component
      */
     protected function getSSOVars(): array
     {
+        /* @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
         $vars = [
-            'useSSO'         => false,
+            'useSSO' => false,
             'useCustomLogin' => false,
         ];
         if ($settings['useSSO']) {
@@ -137,15 +136,12 @@ class DisqusService extends Component
             if ($currentUser) {
                 $data['id'] = $currentUser->id;
                 if (Craft::$app->getConfig()->getGeneral()->useEmailAsUsername) {
-                    $data['username'] = $currentUser->getFullName();
+                    $data['username'] = $currentUser->fullName;
                 } else {
                     $data['username'] = $currentUser->username;
                 }
                 $data['email'] = $currentUser->email;
-                try {
-                    $data['avatar'] = $currentUser->getPhoto();
-                } catch (InvalidConfigException $e) {
-                }
+                $data['avatar'] = $currentUser->getPhoto();
             }
 
             // Encode the data array and generate the hMac
@@ -153,17 +149,17 @@ class DisqusService extends Component
             $timestamp = time();
             $hMac = $this->disqusHmacSha1(
                 $message
-                .' '
-                .$timestamp,
+                . ' '
+                . $timestamp,
                 $settings['disqusSecretKey']
             );
 
             // Set the vars for the template
             $vars = array_merge($vars, [
-                'useSSO'          => true,
-                'message'         => $message,
-                'hmac'            => $hMac,
-                'timestamp'       => $timestamp,
+                'useSSO' => true,
+                'message' => $message,
+                'hmac' => $hMac,
+                'timestamp' => $timestamp,
                 'disqusPublicKey' => $settings['disqusPublicKey'],
             ]);
 
@@ -171,13 +167,13 @@ class DisqusService extends Component
             if ($settings['customLogin']) {
                 $vars = array_merge($vars, [
                     'useCustomLogin' => true,
-                    'loginName'      => $settings['loginName'],
-                    'loginButton'    => $settings['loginButton'],
-                    'loginIcon'      => $settings['loginIcon'],
-                    'loginUrl'       => $settings['loginUrl'],
+                    'loginName' => $settings['loginName'],
+                    'loginButton' => $settings['loginButton'],
+                    'loginIcon' => $settings['loginIcon'],
+                    'loginUrl' => $settings['loginUrl'],
                     'loginLogoutUrl' => $settings['loginLogoutUrl'],
-                    'loginWidth'     => $settings['loginWidth'],
-                    'loginHeight'    => $settings['loginHeight'],
+                    'loginWidth' => $settings['loginWidth'],
+                    'loginHeight' => $settings['loginHeight'],
                 ]);
             }
         }
@@ -193,7 +189,7 @@ class DisqusService extends Component
      *
      * @return string
      */
-    protected function renderPluginTemplate($templatePath, $vars)
+    protected function renderPluginTemplate($templatePath, $vars): string
     {
         // Stash the old template mode, and set it Control Panel template mode
         $oldMode = Craft::$app->view->getTemplateMode();
@@ -205,9 +201,9 @@ class DisqusService extends Component
 
         // Render the template with our vars passed in
         try {
-            $htmlText = Craft::$app->view->renderTemplate('disqus/'.$templatePath, $vars);
+            $htmlText = Craft::$app->view->renderTemplate('disqus/' . $templatePath, $vars);
         } catch (\Exception $e) {
-            $htmlText = 'Error rendering template '.$templatePath.' -> '.$e->getMessage();
+            $htmlText = 'Error rendering template ' . $templatePath . ' -> ' . $e->getMessage();
             Craft::error(Craft::t('disqus', $htmlText), __METHOD__);
         }
 
@@ -231,7 +227,7 @@ class DisqusService extends Component
      *
      * @return string
      */
-    protected function disqusHmacSha1($data, $key)
+    protected function disqusHmacSha1($data, $key): string
     {
         $blockSize = 64;
         $hashFunc = 'sha1';
@@ -244,10 +240,10 @@ class DisqusService extends Component
         $hMac = pack(
             'H*',
             $hashFunc(
-                ($key ^ $oPad).pack(
+                ($key ^ $oPad) . pack(
                     'H*',
                     $hashFunc(
-                        ($key ^ $iPad).$data
+                        ($key ^ $iPad) . $data
                     )
                 )
             )
