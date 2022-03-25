@@ -33,12 +33,13 @@ class DisqusVariable
      * @return string
      */
     public function disqusEmbed(
-        $disqusIdentifier = "",
-        $disqusTitle = "",
-        $disqusUrl = "",
-        $disqusCategoryId = "",
-        $disqusLanguage = ""
-    ) {
+        string $disqusIdentifier = "",
+        string $disqusTitle = "",
+        string $disqusUrl = "",
+        string $disqusCategoryId = "",
+        string $disqusLanguage = ""
+    ): string
+    {
         return Disqus::$plugin->disqusService->outputEmbedTag(
             $disqusIdentifier,
             $disqusTitle,
@@ -54,8 +55,9 @@ class DisqusVariable
      * @return int
      */
     public function disqusCount(
-        $disqusIdentifier = ""
-    ) {
+        string $disqusIdentifier = ""
+    ): int
+    {
         return Disqus::$plugin->disqusService->getCommentsCount(
             $disqusIdentifier
         );
@@ -68,6 +70,6 @@ class DisqusVariable
      */
     public function craft31(): bool
     {
-        return Disqus::$craft31;
+        return true;
     }
 }

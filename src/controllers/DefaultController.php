@@ -11,10 +11,9 @@
 
 namespace nystudio107\disqus\controllers;
 
-use nystudio107\disqus\Disqus;
-
 use Craft;
 use craft\web\Controller;
+use yii\web\Response;
 
 /**
  * @author    nystudio107
@@ -40,9 +39,9 @@ class DefaultController extends Controller
     /**
      * @return mixed
      */
-    public function actionLogoutRedirect()
+    public function actionLogoutRedirect(): Response
     {
         Craft::$app->getUser()->logout(false);
-        $this->redirect($_SERVER['HTTP_REFERER']);
+        return $this->redirect($_SERVER['HTTP_REFERER']);
     }
 }

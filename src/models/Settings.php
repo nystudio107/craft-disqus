@@ -11,12 +11,8 @@
 
 namespace nystudio107\disqus\models;
 
-use nystudio107\disqus\Disqus;
-
-use Craft;
 use craft\base\Model;
 use craft\behaviors\EnvAttributeParserBehavior;
-
 use yii\behaviors\AttributeTypecastBehavior;
 
 /**
@@ -32,62 +28,62 @@ class Settings extends Model
     /**
      * @var string
      */
-    public $disqusShortname = '';
+    public string $disqusShortname = '';
 
     /**
      * @var bool
      */
-    public $useSSO = false;
+    public bool $useSSO = false;
 
     /**
      * @var string
      */
-    public $disqusPublicKey = '';
+    public string $disqusPublicKey = '';
 
     /**
      * @var string
      */
-    public $disqusSecretKey = '';
+    public string $disqusSecretKey = '';
 
     /**
      * @var bool
      */
-    public $customLogin = false;
+    public bool $customLogin = false;
 
     /**
      * @var string
      */
-    public $loginName = '';
+    public string $loginName = '';
 
     /**
      * @var string
      */
-    public $loginButton = '';
+    public string $loginButton = '';
 
     /**
      * @var string
      */
-    public $loginIcon = '';
+    public string $loginIcon = '';
 
     /**
      * @var string
      */
-    public $loginUrl = '';
+    public string $loginUrl = '';
 
     /**
      * @var string
      */
-    public $loginLogoutUrl = '';
+    public string $loginLogoutUrl = '';
 
     /**
      * @var int
      */
-    public $loginWidth = 800;
+    public int $loginWidth = 800;
 
     /**
      * @var int
      */
-    public $loginHeight = 400;
+    public int $loginHeight = 400;
 
     // Public Methods
     // =========================================================================
@@ -131,24 +127,18 @@ class Settings extends Model
      */
     public function behaviors(): array
     {
-        $craft31Behaviors = [];
-        if (Disqus::$craft31) {
-            $craft31Behaviors = [
-                'parser' => [
-                    'class' => EnvAttributeParserBehavior::class,
-                    'attributes' => [
-                        'disqusPublicKey',
-                        'disqusSecretKey',
-                    ],
-                ]
-            ];
-        }
-
-        return array_merge($craft31Behaviors, [
+        return [
             'typecast' => [
                 'class' => AttributeTypecastBehavior::class,
                 // 'attributeTypes' will be composed automatically according to `rules()`
             ],
-        ]);
+            'parser' => [
+                'class' => EnvAttributeParserBehavior::class,
+                'attributes' => [
+                    'disqusPublicKey',
+                    'disqusSecretKey',
+                ],
+            ]
+        ];
     }
 }

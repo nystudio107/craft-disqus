@@ -15,5 +15,6 @@
  * @since     1.0.0
  */
 return [
-    'Disqus plugin loaded' => 'Disqus plugin loaded',
+    '{name} plugin loaded' => '{name} plugin loaded',
+    'Public API Key missing' => 'Public API Key missing'
 ];

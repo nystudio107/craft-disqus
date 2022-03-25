@@ -12,13 +12,16 @@
 namespace nystudio107\disqus\twigextensions;
 
 use nystudio107\disqus\Disqus;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * @author    nystudio107
  * @package   Disqus
  * @since     1.0.0
  */
-class DisqusTwigExtension extends \Twig\Extension\AbstractExtension
+class DisqusTwigExtension extends AbstractExtension
 {
     // Public Methods
     // =========================================================================
@@ -26,7 +29,7 @@ class DisqusTwigExtension extends \Twig\Extension\AbstractExtension
     /**
      * @inheritdoc
      */
-    public function getName()
+    public function getName(): string
     {
         return 'Disqus';
     }
@@ -34,22 +37,22 @@ class DisqusTwigExtension extends \Twig\Extension\AbstractExtension
     /**
      * @inheritdoc
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
-            new \Twig\TwigFilter('disqusEmbed', [$this, 'disqusEmbed']),
-            new \Twig\TwigFilter('disqusCount', [$this, 'disqusCount']),
+            new TwigFilter('disqusEmbed', [$this, 'disqusEmbed']),
+            new TwigFilter('disqusCount', [$this, 'disqusCount']),
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig\TwigFunction('disqusEmbed', [$this, 'disqusEmbed']),
-            new \Twig\TwigFunction('disqusCount', [$this, 'disqusCount']),
+            new TwigFunction('disqusEmbed', [$this, 'disqusEmbed']),
+            new TwigFunction('disqusCount', [$this, 'disqusCount']),
         ];
     }
 
@@ -63,12 +66,13 @@ class DisqusTwigExtension extends \Twig\Extension\AbstractExtension
      * @return string
      */
     public function disqusEmbed(
-        $disqusIdentifier = "",
-        $disqusTitle = "",
-        $disqusUrl = "",
-        $disqusCategoryId = "",
-        $disqusLanguage = ""
-    ) {
+        string $disqusIdentifier = "",
+        string $disqusTitle = "",
+        string $disqusUrl = "",
+        string $disqusCategoryId = "",
+        string $disqusLanguage = ""
+    ): string
+    {
         return Disqus::$plugin->disqusService->outputEmbedTag(
             $disqusIdentifier,
             $disqusTitle,
@@ -84,8 +88,9 @@ class DisqusTwigExtension extends \Twig\Extension\AbstractExtension
      * @return int
      */
     public function disqusCount(
-        $disqusIdentifier = ""
-    ) {
+        string $disqusIdentifier = ""
+    ): int
+    {
         return Disqus::$plugin->disqusService->getCommentsCount(
             $disqusIdentifier
         );

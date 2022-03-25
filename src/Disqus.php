@@ -11,15 +11,13 @@
 
 namespace nystudio107\disqus;
 
-use nystudio107\disqus\services\DisqusService as DisqusService;
-use nystudio107\disqus\variables\DisqusVariable;
-use nystudio107\disqus\twigextensions\DisqusTwigExtension;
-use nystudio107\disqus\models\Settings;
-
 use Craft;
 use craft\base\Plugin;
 use craft\web\twig\variables\CraftVariable;
-
+use nystudio107\disqus\models\Settings;
+use nystudio107\disqus\services\DisqusService;
+use nystudio107\disqus\twigextensions\DisqusTwigExtension;
+use nystudio107\disqus\variables\DisqusVariable;
 use yii\base\Event;
 
 /**
@@ -37,14 +35,9 @@ class Disqus extends Plugin
     // =========================================================================
 
     /**
-     * @var Disqus
+     * @var ?Disqus
      */
-    public static $plugin;
-
-    /**
-     * @var bool
-     */
-    public static $craft31 = false;
+    public static ?Disqus $plugin = null;
 
     // Public Properties
     // =========================================================================
@@ -85,26 +78,20 @@ class Disqus extends Plugin
     /**
      * @inheritdoc
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         self::$plugin = $this;
-
-        // Version helpers
-        self::$craft31 = version_compare(Craft::$app->getVersion(), '3.1', '>=');
-
         Event::on(
             CraftVariable::class,
             CraftVariable::EVENT_INIT,
-            function (Event $event) {
+            static function (Event $event) {
                 /** @var CraftVariable $variable */
                 $variable = $event->sender;
                 $variable->set('disqus', DisqusVariable::class);
             }
         );
-
         Craft::$app->view->registerTwigExtension(new DisqusTwigExtension());
-
         Craft::info(
             Craft::t(
                 'disqus',
@@ -121,7 +108,7 @@ class Disqus extends Plugin
     /**
      * @inheritdoc
      */
-    protected function createSettingsModel(): ?\craft\base\Model
+    protected function createSettingsModel(): Settings
     {
         return new Settings();
     }
