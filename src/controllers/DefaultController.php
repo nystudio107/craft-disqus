@@ -32,7 +32,7 @@ class DefaultController extends Controller
      *         The actions must be in 'kebab-case'
      * @access protected
      */
-    protected $allowAnonymous = ['logout-redirect'];
+    protected array|bool|int $allowAnonymous = ['logout-redirect'];
 
     // Public Methods
     // =========================================================================

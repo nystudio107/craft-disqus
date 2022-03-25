@@ -95,7 +95,7 @@ class Settings extends Model
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             ['disqusShortname', 'string'],
@@ -129,7 +129,7 @@ class Settings extends Model
     /**
      * @return array
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         $craft31Behaviors = [];
         if (Disqus::$craft31) {

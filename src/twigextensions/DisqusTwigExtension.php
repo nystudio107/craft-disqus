@@ -18,7 +18,7 @@ use nystudio107\disqus\Disqus;
  * @package   Disqus
  * @since     1.0.0
  */
-class DisqusTwigExtension extends \Twig_Extension
+class DisqusTwigExtension extends \Twig\Extension\AbstractExtension
 {
     // Public Methods
     // =========================================================================
@@ -37,8 +37,8 @@ class DisqusTwigExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('disqusEmbed', [$this, 'disqusEmbed']),
-            new \Twig_SimpleFilter('disqusCount', [$this, 'disqusCount']),
+            new \Twig\TwigFilter('disqusEmbed', [$this, 'disqusEmbed']),
+            new \Twig\TwigFilter('disqusCount', [$this, 'disqusCount']),
         ];
     }
 
@@ -48,8 +48,8 @@ class DisqusTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('disqusEmbed', [$this, 'disqusEmbed']),
-            new \Twig_SimpleFunction('disqusCount', [$this, 'disqusCount']),
+            new \Twig\TwigFunction('disqusEmbed', [$this, 'disqusEmbed']),
+            new \Twig\TwigFunction('disqusCount', [$this, 'disqusCount']),
         ];
     }
 
