@@ -18,6 +18,7 @@ use craft\helpers\Template;
 use craft\web\View;
 use nystudio107\disqus\Disqus;
 use nystudio107\disqus\models\Settings;
+use Twig\Markup;
 use yii\base\Exception;
 
 /**
@@ -39,7 +40,7 @@ class DisqusService extends Component
      * @param string $disqusCategoryId
      * @param string $disqusLanguage
      *
-     * @return string
+     * @return Markup
      */
     public function outputEmbedTag(
         string $disqusIdentifier = "",
@@ -47,7 +48,7 @@ class DisqusService extends Component
         string $disqusUrl = "",
         string $disqusCategoryId = "",
         string $disqusLanguage = ""
-    ): string
+    ): Markup
     {
         /* @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
@@ -187,9 +188,9 @@ class DisqusService extends Component
      * @param $templatePath
      * @param $vars
      *
-     * @return string
+     * @return Markup
      */
-    protected function renderPluginTemplate($templatePath, $vars): string
+    protected function renderPluginTemplate($templatePath, $vars): Markup
     {
         // Stash the old template mode, and set it Control Panel template mode
         $oldMode = Craft::$app->view->getTemplateMode();
