@@ -12,6 +12,7 @@
 namespace nystudio107\disqus\variables;
 
 use nystudio107\disqus\Disqus;
+use Twig\Markup;
 
 /**
  * @author    nystudio107
@@ -30,7 +31,7 @@ class DisqusVariable
      * @param string $disqusCategoryId
      * @param string $disqusLanguage
      *
-     * @return string
+     * @return Markup
      */
     public function disqusEmbed(
         string $disqusIdentifier = "",
@@ -38,7 +39,7 @@ class DisqusVariable
         string $disqusUrl = "",
         string $disqusCategoryId = "",
         string $disqusLanguage = ""
-    ): string
+    ): Markup
     {
         return Disqus::$plugin->disqusService->outputEmbedTag(
             $disqusIdentifier,
