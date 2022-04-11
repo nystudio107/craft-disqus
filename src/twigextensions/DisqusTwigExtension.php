@@ -13,6 +13,7 @@ namespace nystudio107\disqus\twigextensions;
 
 use nystudio107\disqus\Disqus;
 use Twig\Extension\AbstractExtension;
+use Twig\Markup;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
@@ -63,7 +64,7 @@ class DisqusTwigExtension extends AbstractExtension
      * @param string $disqusCategoryId
      * @param string $disqusLanguage
      *
-     * @return string
+     * @return Markup
      */
     public function disqusEmbed(
         string $disqusIdentifier = "",
@@ -71,7 +72,7 @@ class DisqusTwigExtension extends AbstractExtension
         string $disqusUrl = "",
         string $disqusCategoryId = "",
         string $disqusLanguage = ""
-    ): string
+    ): Markup
     {
         return Disqus::$plugin->disqusService->outputEmbedTag(
             $disqusIdentifier,
