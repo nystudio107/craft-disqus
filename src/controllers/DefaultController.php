@@ -25,18 +25,13 @@ class DefaultController extends Controller
     // Protected Properties
     // =========================================================================
 
-    /**
-     * @var    bool|array Allows anonymous access to this controller's actions.
-     *         The actions must be in 'kebab-case'
-     * @access protected
-     */
     protected array|bool|int $allowAnonymous = ['logout-redirect'];
 
     // Public Methods
     // =========================================================================
 
     /**
-     * @return mixed
+     * @return Response
      */
     public function actionLogoutRedirect(): Response
     {

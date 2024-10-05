@@ -15,6 +15,7 @@ use Craft;
 use craft\base\Component;
 use craft\helpers\App;
 use craft\helpers\Template;
+use craft\web\User;
 use craft\web\View;
 use nystudio107\disqus\Disqus;
 use nystudio107\disqus\models\Settings;
@@ -49,7 +50,7 @@ class DisqusService extends Component
         string $disqusCategoryId = "",
         string $disqusLanguage = "",
     ): Markup {
-        /* @var Settings $settings */
+        /** @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
         $disqusShortname = $settings->disqusShortname;
 
@@ -77,7 +78,7 @@ class DisqusService extends Component
     public function getCommentsCount(
         string $disqusIdentifier = "",
     ): int {
-        /* @var Settings $settings */
+        /** @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
         $settings->disqusPublicKey = App::parseEnv($settings['disqusPublicKey']);
         $settings->disqusSecretKey = App::parseEnv($settings['disqusSecretKey']);
@@ -121,7 +122,7 @@ class DisqusService extends Component
      */
     protected function getSSOVars(): array
     {
-        /* @var Settings $settings */
+        /** @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
         $vars = [
             'useSSO' => false,
@@ -131,7 +132,9 @@ class DisqusService extends Component
             $data = [];
 
             // Set the data array
-            $currentUser = Craft::$app->getUser()->getIdentity();
+            /** @var User $user */
+            $user = Craft::$app->getUser();
+            $currentUser = $user->getIdentity();
             if ($currentUser) {
                 $data['id'] = $currentUser->id;
                 if (Craft::$app->getConfig()->getGeneral()->useEmailAsUsername) {
