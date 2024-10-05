@@ -143,7 +143,7 @@ class DisqusService extends Component
                     $data['username'] = $currentUser->username;
                 }
                 $data['email'] = $currentUser->email;
-                $data['avatar'] = $currentUser->getPhoto();
+                $data['avatar'] = $currentUser->getPhoto()->getUrl();
             }
 
             // Encode the data array and generate the hMac
