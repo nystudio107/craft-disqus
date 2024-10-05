@@ -47,9 +47,8 @@ class DisqusService extends Component
         string $disqusTitle = "",
         string $disqusUrl = "",
         string $disqusCategoryId = "",
-        string $disqusLanguage = ""
-    ): Markup
-    {
+        string $disqusLanguage = "",
+    ): Markup {
         /* @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
         $disqusShortname = $settings->disqusShortname;
@@ -76,9 +75,8 @@ class DisqusService extends Component
      * @noinspection PhpComposerExtensionStubsInspection
      */
     public function getCommentsCount(
-        string $disqusIdentifier = ""
-    ): int
-    {
+        string $disqusIdentifier = "",
+    ): int {
         /* @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
         $settings->disqusPublicKey = App::parseEnv($settings['disqusPublicKey']);

@@ -71,9 +71,8 @@ class DisqusTwigExtension extends AbstractExtension
         string $disqusTitle = "",
         string $disqusUrl = "",
         string $disqusCategoryId = "",
-        string $disqusLanguage = ""
-    ): Markup
-    {
+        string $disqusLanguage = "",
+    ): Markup {
         return Disqus::$plugin->disqusService->outputEmbedTag(
             $disqusIdentifier,
             $disqusTitle,
@@ -89,9 +88,8 @@ class DisqusTwigExtension extends AbstractExtension
      * @return int
      */
     public function disqusCount(
-        string $disqusIdentifier = ""
-    ): int
-    {
+        string $disqusIdentifier = "",
+    ): int {
         return Disqus::$plugin->disqusService->getCommentsCount(
             $disqusIdentifier
         );

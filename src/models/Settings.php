@@ -138,7 +138,7 @@ class Settings extends Model
                     'disqusPublicKey',
                     'disqusSecretKey',
                 ],
-            ]
+            ],
         ];
     }
 }

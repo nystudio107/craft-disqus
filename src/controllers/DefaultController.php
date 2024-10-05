@@ -22,7 +22,6 @@ use yii\web\Response;
  */
 class DefaultController extends Controller
 {
-
     // Protected Properties
     // =========================================================================
 

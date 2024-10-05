@@ -16,5 +16,5 @@
  */
 return [
     '{name} plugin loaded' => '{name} plugin loaded',
-    'Public API Key missing' => 'Public API Key missing'
+    'Public API Key missing' => 'Public API Key missing',
 ];
