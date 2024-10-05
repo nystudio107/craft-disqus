@@ -5,6 +5,9 @@
 * Add `phpstan` and `ecs` code linting
 * Add `code-analysis.yaml` GitHub action
 
+### Fixed
+* Fixed an issue where avatars wouldn't display ([#37](https://github.com/nystudio107/craft-disqus/issues/37))
+
 ## 4.0.0 - 2022.06.01
 ### Added
 * Initial Craft CMS 4 release
