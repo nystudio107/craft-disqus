@@ -27,7 +27,7 @@ Next in the Craft Control Panel, go to Settings->Plugins->Disqus and enter the S
 
 All settings are also configurable via the `config.php` file, which is a multi-environment friendly way to store the default settings.  Don’t edit this file, instead copy it to `craft/config` as `disqus.php` and make your changes there.
 
-The **Lazy Load Disqus** settings lets you control whether the Disqus JavaScript will only be [lazily loaded](https://www.samclarke.com/lazy-loading-disqus/) when the user scrolls down to the comments. This is on my default for performance reasons, but you can disabled it if you need to.
+The **Lazy Load Disqus** settings lets you control whether the Disqus JavaScript will only be [lazily loaded](https://www.samclarke.com/lazy-loading-disqus/) when the user scrolls down to the comments. This is on my default for performance reasons, but you can disabled it to.
 
 ### Single Sign On (SSO)
 
@@ -157,7 +157,7 @@ This will result in comments that are different for each language, and the Disqu
 
 ## Additional `<script>` Attributes
 
-If you need to add additional attributes to the Disqus `<script>` that the Disqus plugin renders, you can do that via the `SCRIPT_ATTRIBUTES` parameter:
+To add additional attributes to the Disqus `<script>` that the Disqus plugin renders, you can do that via the `SCRIPT_ATTRIBUTES` parameter:
 
 ```twig
     {{ disqusEmbed(entry.slug ~ "_" ~ entry.locale, entry.title, entry.url, '', '', { class: "some-class" } ) }}
