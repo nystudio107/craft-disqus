@@ -3,6 +3,7 @@
 ## 4.0.1 - UNRELEASED
 ### Added
 * Added a **Lazy Load Disqus** settings option, so you can control whether the Disqus JavaScript is lazily loaded or not ([#8](https://github.com/nystudio107/craft-disqus/issues/8))
+* Added the ability to pass in additional attributes that will be added to the rendered Disqus `<script>` tag ([#28](https://github.com/nystudio107/craft-disqus/issues/28))
 * Add `phpstan` and `ecs` code linting
 * Add `code-analysis.yaml` GitHub action
 
