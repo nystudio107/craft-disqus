@@ -73,7 +73,7 @@ class DisqusTwigExtension extends AbstractExtension
         string $disqusUrl = "",
         string $disqusCategoryId = "",
         string $disqusLanguage = "",
-        array  $scriptAttributes = []
+        array  $scriptAttributes = [],
     ): Markup {
         return Disqus::$plugin->disqusService->outputEmbedTag(
             $disqusIdentifier,
