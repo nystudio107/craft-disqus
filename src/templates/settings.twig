@@ -10,6 +10,15 @@
 {%- endmacro %}
 {% from _self import configWarning %}
 
+{{ forms.lightswitchField({
+    'label': 'Lazy Load Disqus',
+    'instructions': 'Should the Disqus JavaScript be lazily loaded? This helps with performance, not loading the Disqus JavaScript until the user scrolls down to the comments.',
+    'id': 'lazyLoadDisqus',
+    'name': 'lazyLoadDisqus',
+    'on': settings['lazyLoadDisqus'],
+    'warning': configWarning('lazyLoadDisqus')
+}) }}
+
 {{ forms.textField({
     'label': 'Disqus Site Short Name',
     'instructions': 'Enter your Disqus Site Short Name here.',

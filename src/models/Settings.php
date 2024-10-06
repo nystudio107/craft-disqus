@@ -26,6 +26,11 @@ class Settings extends Model
     // =========================================================================
 
     /**
+     * @var bool
+     */
+    public bool $lazyLoadDisqus = true;
+
+    /**
      * @var string
      */
     public string $disqusShortname = '';
@@ -94,6 +99,8 @@ class Settings extends Model
     public function rules(): array
     {
         return [
+            ['lazyLoadDisqus', 'boolean'],
+            ['lazyLoadDisqus', 'default', 'value' => false],
             ['disqusShortname', 'string'],
             ['disqusShortname', 'default', 'value' => ''],
             ['useSSO', 'boolean'],

@@ -64,7 +64,12 @@ class DisqusService extends Component
         ];
         $vars = array_merge($vars, $this->getSSOVars());
 
-        return $this->renderPluginTemplate('disqusEmbedTag', $vars);
+        $templateName = 'disqusEmbedTag';
+        if ($settings->lazyLoadDisqus) {
+            $templateName = 'disqusEmbedTagLazy';
+        }
+
+        return $this->renderPluginTemplate($templateName, $vars);
     }
 
     /**
