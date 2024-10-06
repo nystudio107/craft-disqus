@@ -14,6 +14,7 @@ namespace nystudio107\disqus\services;
 use Craft;
 use craft\base\Component;
 use craft\helpers\App;
+use craft\helpers\Html;
 use craft\helpers\Template;
 use craft\web\User;
 use craft\web\View;
@@ -40,6 +41,7 @@ class DisqusService extends Component
      * @param string $disqusUrl
      * @param string $disqusCategoryId
      * @param string $disqusLanguage
+     * @param array $scriptAttributes
      *
      * @return Markup
      */
@@ -49,6 +51,7 @@ class DisqusService extends Component
         string $disqusUrl = "",
         string $disqusCategoryId = "",
         string $disqusLanguage = "",
+        array  $scriptAttributes = [],
     ): Markup {
         /** @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
@@ -61,6 +64,7 @@ class DisqusService extends Component
             'disqusUrl' => $disqusUrl,
             'disqusCategoryId' => $disqusCategoryId,
             'disqusLanguage' => $disqusLanguage,
+            'scriptAttributes' => Html::renderTagAttributes($scriptAttributes),
         ];
         $vars = array_merge($vars, $this->getSSOVars());
 

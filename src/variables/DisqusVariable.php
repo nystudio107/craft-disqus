@@ -30,6 +30,7 @@ class DisqusVariable
      * @param string $disqusUrl
      * @param string $disqusCategoryId
      * @param string $disqusLanguage
+     * @param array $scriptAttributes
      *
      * @return Markup
      */
@@ -39,13 +40,15 @@ class DisqusVariable
         string $disqusUrl = "",
         string $disqusCategoryId = "",
         string $disqusLanguage = "",
+        array  $scriptAttributes = [],
     ): Markup {
         return Disqus::$plugin->disqusService->outputEmbedTag(
             $disqusIdentifier,
             $disqusTitle,
             $disqusUrl,
             $disqusCategoryId,
-            $disqusLanguage
+            $disqusLanguage,
+            $scriptAttributes
         );
     }
 
