@@ -4,11 +4,13 @@
 ### Added
 * Added a **Lazy Load Disqus** settings option, so you can control whether the Disqus JavaScript is lazily loaded or not ([#8](https://github.com/nystudio107/craft-disqus/issues/8))
 * Added the ability to pass in additional attributes that will be added to the rendered Disqus `<script>` tag ([#28](https://github.com/nystudio107/craft-disqus/issues/28))
+* Added the ability to use environment variables / aliases for the additional settings ([#15](https://github.com/nystudio107/craft-disqus/pull/15/))
 * Add `phpstan` and `ecs` code linting
 * Add `code-analysis.yaml` GitHub action
 
 ### Fixed
 * Fixed an issue where avatars wouldn't display ([#37](https://github.com/nystudio107/craft-disqus/issues/37))
+* Fixed an issue where incorrect headers were sent if the API key was an environment variable or alias ([#15](https://github.com/nystudio107/craft-disqus/pull/15/))
 
 ## 1.1.3 - 2021.04.20
 ### Added
