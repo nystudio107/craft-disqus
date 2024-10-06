@@ -11,6 +11,7 @@
 
 namespace nystudio107\disqus\models;
 
+use Craft;
 use craft\base\Model;
 use craft\behaviors\EnvAttributeParserBehavior;
 use nystudio107\disqus\Disqus;
@@ -111,7 +112,7 @@ class Settings extends Model
     }
 
     /**
-     * @return string 
+     * @return string
      */
     public function getDisqusShortname(): string
     {
