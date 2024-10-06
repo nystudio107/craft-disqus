@@ -70,9 +70,8 @@ class DisqusService extends Component
         if ($settings->lazyLoadDisqus) {
             $templateName = 'disqusEmbedTagLazy';
         }
-        $result = $this->renderPluginTemplate($templateName, $vars);
 
-        return $result;
+        return $this->renderPluginTemplate($templateName, $vars);
     }
 
     /**
@@ -161,17 +160,17 @@ class DisqusService extends Component
             $timestamp = time();
             $hMac = $this->disqusHmacSha1(
                 $message
-                .' '
-                .$timestamp,
+                . ' '
+                . $timestamp,
                 $settings->getDisqusSecretKey()
             );
 
             // Set the vars for the template
             $vars = array_merge($vars, [
-                'useSSO'          => true,
-                'message'         => $message,
-                'hmac'            => $hMac,
-                'timestamp'       => $timestamp,
+                'useSSO' => true,
+                'message' => $message,
+                'hmac' => $hMac,
+                'timestamp' => $timestamp,
                 'disqusPublicKey' => $settings->getDisqusPublicKey(),
             ]);
 
@@ -179,13 +178,13 @@ class DisqusService extends Component
             if ($settings->getCustomLogin()) {
                 $vars = array_merge($vars, [
                     'useCustomLogin' => true,
-                    'loginName'      => $settings->getLoginName(),
-                    'loginButton'    => $settings->getLoginButton(),
-                    'loginIcon'      => $settings->getLoginIcon(),
-                    'loginUrl'       => $settings->getLoginUrl(),
+                    'loginName' => $settings->getLoginName(),
+                    'loginButton' => $settings->getLoginButton(),
+                    'loginIcon' => $settings->getLoginIcon(),
+                    'loginUrl' => $settings->getLoginUrl(),
                     'loginLogoutUrl' => $settings->getLoginLogoutUrl(),
-                    'loginWidth'     => $settings->getLoginWidth(),
-                    'loginHeight'    => $settings->getLoginHeight(),
+                    'loginWidth' => $settings->getLoginWidth(),
+                    'loginHeight' => $settings->getLoginHeight(),
                 ]);
             }
         }
