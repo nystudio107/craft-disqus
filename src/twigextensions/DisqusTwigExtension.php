@@ -12,13 +12,16 @@
 namespace nystudio107\disqus\twigextensions;
 
 use nystudio107\disqus\Disqus;
+use Twig_Extension;
+use Twig_SimpleFilter;
+use Twig_SimpleFunction;
 
 /**
  * @author    nystudio107
  * @package   Disqus
  * @since     1.0.0
  */
-class DisqusTwigExtension extends \Twig_Extension
+class DisqusTwigExtension extends Twig_Extension
 {
     // Public Methods
     // =========================================================================
@@ -37,8 +40,8 @@ class DisqusTwigExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('disqusEmbed', [$this, 'disqusEmbed']),
-            new \Twig_SimpleFilter('disqusCount', [$this, 'disqusCount']),
+            new Twig_SimpleFilter('disqusEmbed', [$this, 'disqusEmbed']),
+            new Twig_SimpleFilter('disqusCount', [$this, 'disqusCount']),
         ];
     }
 
@@ -48,8 +51,8 @@ class DisqusTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('disqusEmbed', [$this, 'disqusEmbed']),
-            new \Twig_SimpleFunction('disqusCount', [$this, 'disqusCount']),
+            new Twig_SimpleFunction('disqusEmbed', [$this, 'disqusEmbed']),
+            new Twig_SimpleFunction('disqusCount', [$this, 'disqusCount']),
         ];
     }
 
@@ -59,6 +62,7 @@ class DisqusTwigExtension extends \Twig_Extension
      * @param string $disqusUrl
      * @param string $disqusCategoryId
      * @param string $disqusLanguage
+     * @param array $scriptAttributes ,
      *
      * @return string
      */
@@ -67,14 +71,16 @@ class DisqusTwigExtension extends \Twig_Extension
         $disqusTitle = "",
         $disqusUrl = "",
         $disqusCategoryId = "",
-        $disqusLanguage = ""
+        $disqusLanguage = "",
+        $scriptAttributes = []
     ) {
         return Disqus::$plugin->disqusService->outputEmbedTag(
             $disqusIdentifier,
             $disqusTitle,
             $disqusUrl,
             $disqusCategoryId,
-            $disqusLanguage
+            $disqusLanguage,
+            $scriptAttributes
         );
     }
 
