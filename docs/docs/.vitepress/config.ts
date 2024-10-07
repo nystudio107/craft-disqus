@@ -1,8 +1,8 @@
 import {defineConfig} from 'vitepress'
 
 export default defineConfig({
-  title: 'Vite Plugin',
-  description: 'Documentation for the Vite plugin',
+  title: 'Disqus Plugin',
+  description: 'Documentation for the Disqus plugin',
   base: '/docs/disqus/v4/',
   lang: 'en-US',
   head: [

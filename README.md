@@ -6,8 +6,6 @@ Integrates the Disqus commenting system into Craft CMS websites, including Singl
 
 ![Screenshot](./docs/docs/resources/img/plugin-logo.png)
 
-Related: [Disqus for Craft 2.x](https://github.com/nystudio107/disqus)
-
 ## Requirements
 
 This plugin requires Craft CMS 4.0.0 or later.
