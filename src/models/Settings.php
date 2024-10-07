@@ -13,6 +13,7 @@ namespace nystudio107\disqus\models;
 
 use craft\base\Model;
 use craft\behaviors\EnvAttributeParserBehavior;
+use craft\helpers\App;
 use yii\behaviors\AttributeTypecastBehavior;
 
 /**
@@ -24,6 +25,11 @@ class Settings extends Model
 {
     // Public Properties
     // =========================================================================
+
+    /**
+     * @var bool
+     */
+    public bool $lazyLoadDisqus = true;
 
     /**
      * @var string
@@ -89,11 +95,109 @@ class Settings extends Model
     // =========================================================================
 
     /**
+     * @return string the parsed secret key (e.g. 'XXXXXXXXXXX')
+     */
+    public function getDisqusSecretKey(): string
+    {
+        return App::parseEnv($this->disqusSecretKey);
+    }
+
+    /**
+     * @return string the parsed public key (e.g. 'XXXXXXXXXXX')
+     */
+    public function getDisqusPublicKey(): string
+    {
+        return App::parseEnv($this->disqusPublicKey);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDisqusShortname(): string
+    {
+        return $this->disqusShortname;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getUseSSO(): bool
+    {
+        return $this->useSSO;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCustomLogin(): bool
+    {
+        return $this->customLogin;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoginName(): string
+    {
+        return App::parseEnv($this->loginName);
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoginButton(): string
+    {
+        return App::parseEnv($this->loginButton);
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoginIcon(): string
+    {
+        return App::parseEnv($this->loginIcon);
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoginUrl(): string
+    {
+        return App::parseEnv($this->loginUrl);
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoginLogoutUrl(): string
+    {
+        return App::parseEnv($this->loginLogoutUrl);
+    }
+
+    /**
+     * @return int
+     */
+    public function getLoginWidth(): int
+    {
+        return $this->loginWidth;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLoginHeight(): int
+    {
+        return $this->loginHeight;
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules(): array
     {
         return [
+            ['lazyLoadDisqus', 'boolean'],
+            ['lazyLoadDisqus', 'default', 'value' => false],
             ['disqusShortname', 'string'],
             ['disqusShortname', 'default', 'value' => ''],
             ['useSSO', 'boolean'],
@@ -121,24 +225,28 @@ class Settings extends Model
         ];
     }
 
-
     /**
      * @return array
      */
     public function behaviors(): array
     {
         return [
+            'parser' => [
+                'class' => EnvAttributeParserBehavior::class,
+                'attributes' => [
+                    'loginName',
+                    'loginButton',
+                    'loginIcon',
+                    'loginUrl',
+                    'loginLogoutUrl',
+                    'disqusPublicKey',
+                    'disqusSecretKey',
+                ],
+            ],
             'typecast' => [
                 'class' => AttributeTypecastBehavior::class,
                 // 'attributeTypes' will be composed automatically according to `rules()`
             ],
-            'parser' => [
-                'class' => EnvAttributeParserBehavior::class,
-                'attributes' => [
-                    'disqusPublicKey',
-                    'disqusSecretKey',
-                ],
-            ]
         ];
     }
 }

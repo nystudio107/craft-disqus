@@ -30,6 +30,7 @@ class DisqusVariable
      * @param string $disqusUrl
      * @param string $disqusCategoryId
      * @param string $disqusLanguage
+     * @param array $scriptAttributes
      *
      * @return Markup
      */
@@ -38,15 +39,16 @@ class DisqusVariable
         string $disqusTitle = "",
         string $disqusUrl = "",
         string $disqusCategoryId = "",
-        string $disqusLanguage = ""
-    ): Markup
-    {
+        string $disqusLanguage = "",
+        array  $scriptAttributes = [],
+    ): Markup {
         return Disqus::$plugin->disqusService->outputEmbedTag(
             $disqusIdentifier,
             $disqusTitle,
             $disqusUrl,
             $disqusCategoryId,
-            $disqusLanguage
+            $disqusLanguage,
+            $scriptAttributes
         );
     }
 
@@ -56,9 +58,8 @@ class DisqusVariable
      * @return int
      */
     public function disqusCount(
-        string $disqusIdentifier = ""
-    ): int
-    {
+        string $disqusIdentifier = "",
+    ): int {
         return Disqus::$plugin->disqusService->getCommentsCount(
             $disqusIdentifier
         );

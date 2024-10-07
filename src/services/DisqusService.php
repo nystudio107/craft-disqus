@@ -13,13 +13,15 @@ namespace nystudio107\disqus\services;
 
 use Craft;
 use craft\base\Component;
-use craft\helpers\App;
+use craft\helpers\Html;
 use craft\helpers\Template;
+use craft\web\User;
 use craft\web\View;
 use nystudio107\disqus\Disqus;
 use nystudio107\disqus\models\Settings;
 use Twig\Markup;
 use yii\base\Exception;
+use yii\base\InvalidConfigException;
 
 /**
  * @author    nystudio107
@@ -39,6 +41,7 @@ class DisqusService extends Component
      * @param string $disqusUrl
      * @param string $disqusCategoryId
      * @param string $disqusLanguage
+     * @param array $scriptAttributes
      *
      * @return Markup
      */
@@ -47,12 +50,12 @@ class DisqusService extends Component
         string $disqusTitle = "",
         string $disqusUrl = "",
         string $disqusCategoryId = "",
-        string $disqusLanguage = ""
-    ): Markup
-    {
-        /* @var Settings $settings */
+        string $disqusLanguage = "",
+        array  $scriptAttributes = [],
+    ): Markup {
+        /** @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
-        $disqusShortname = $settings->disqusShortname;
+        $disqusShortname = $settings->getDisqusShortName();
 
         $vars = [
             'disqusShortname' => $disqusShortname,
@@ -61,10 +64,15 @@ class DisqusService extends Component
             'disqusUrl' => $disqusUrl,
             'disqusCategoryId' => $disqusCategoryId,
             'disqusLanguage' => $disqusLanguage,
+            'scriptAttributes' => Html::renderTagAttributes($scriptAttributes),
         ];
         $vars = array_merge($vars, $this->getSSOVars());
+        $templateName = 'disqusEmbedTag';
+        if ($settings->lazyLoadDisqus) {
+            $templateName = 'disqusEmbedTagLazy';
+        }
 
-        return $this->renderPluginTemplate('disqusEmbedTag', $vars);
+        return $this->renderPluginTemplate($templateName, $vars);
     }
 
     /**
@@ -76,16 +84,13 @@ class DisqusService extends Component
      * @noinspection PhpComposerExtensionStubsInspection
      */
     public function getCommentsCount(
-        string $disqusIdentifier = ""
-    ): int
-    {
-        /* @var Settings $settings */
+        string $disqusIdentifier = "",
+    ): int {
+        /** @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
-        $settings->disqusPublicKey = App::parseEnv($settings['disqusPublicKey']);
-        $settings->disqusSecretKey = App::parseEnv($settings['disqusSecretKey']);
-        if (!empty($settings['disqusPublicKey'])) {
-            $disqusShortname = $settings['disqusShortname'];
-            $apiKey = $settings["disqusPublicKey"];
+        if (!empty($settings->getDisqusPublicKey())) {
+            $disqusShortname = $settings->getDisqusShortname();
+            $apiKey = $settings->getDisqusPublicKey();
 
             $url = "https://disqus.com/api/3.0/threads/details.json?api_key="
                 . $apiKey
@@ -103,14 +108,16 @@ class DisqusService extends Component
             $json = json_decode($return, true);
             if ($json !== null && !empty($json["code"]) && $json["code"] == 0) {
                 return $json["response"]["posts"];
+            } else {
+                Craft::error(Craft::t('disqus', print_r($json, true)), __METHOD__);
+
+                return 0;
             }
-            Craft::error(Craft::t('disqus', print_r($json, true)), __METHOD__);
+        } else {
+            Craft::error(Craft::t('disqus', "Public API Key missing"), __METHOD__);
 
             return 0;
         }
-        Craft::error(Craft::t('disqus', "Public API Key missing"), __METHOD__);
-
-        return 0;
     }
 
     // Protected Methods
@@ -123,26 +130,31 @@ class DisqusService extends Component
      */
     protected function getSSOVars(): array
     {
-        /* @var Settings $settings */
+        /** @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
         $vars = [
             'useSSO' => false,
             'useCustomLogin' => false,
         ];
-        if ($settings['useSSO']) {
+        if ($settings->getUseSSO()) {
             $data = [];
 
             // Set the data array
-            $currentUser = Craft::$app->getUser()->getIdentity();
+            /** @var User $user */
+            $user = Craft::$app->getUser();
+            $currentUser = $user->getIdentity();
             if ($currentUser) {
                 $data['id'] = $currentUser->id;
                 if (Craft::$app->getConfig()->getGeneral()->useEmailAsUsername) {
-                    $data['username'] = $currentUser->fullName;
+                    $data['username'] = $currentUser->getFullName();
                 } else {
                     $data['username'] = $currentUser->username;
                 }
                 $data['email'] = $currentUser->email;
-                $data['avatar'] = $currentUser->getPhoto();
+                try {
+                    $data['avatar'] = $currentUser->getPhoto()->getUrl();
+                } catch (InvalidConfigException $e) {
+                }
             }
 
             // Encode the data array and generate the hMac
@@ -152,7 +164,7 @@ class DisqusService extends Component
                 $message
                 . ' '
                 . $timestamp,
-                $settings['disqusSecretKey']
+                $settings->getDisqusSecretKey()
             );
 
             // Set the vars for the template
@@ -161,20 +173,20 @@ class DisqusService extends Component
                 'message' => $message,
                 'hmac' => $hMac,
                 'timestamp' => $timestamp,
-                'disqusPublicKey' => $settings['disqusPublicKey'],
+                'disqusPublicKey' => $settings->getDisqusPublicKey(),
             ]);
 
             // Set the vars for the custom login
-            if ($settings['customLogin']) {
+            if ($settings->getCustomLogin()) {
                 $vars = array_merge($vars, [
                     'useCustomLogin' => true,
-                    'loginName' => $settings['loginName'],
-                    'loginButton' => $settings['loginButton'],
-                    'loginIcon' => $settings['loginIcon'],
-                    'loginUrl' => $settings['loginUrl'],
-                    'loginLogoutUrl' => $settings['loginLogoutUrl'],
-                    'loginWidth' => $settings['loginWidth'],
-                    'loginHeight' => $settings['loginHeight'],
+                    'loginName' => $settings->getLoginName(),
+                    'loginButton' => $settings->getLoginButton(),
+                    'loginIcon' => $settings->getLoginIcon(),
+                    'loginUrl' => $settings->getLoginUrl(),
+                    'loginLogoutUrl' => $settings->getLoginLogoutUrl(),
+                    'loginWidth' => $settings->getLoginWidth(),
+                    'loginHeight' => $settings->getLoginHeight(),
                 ]);
             }
         }

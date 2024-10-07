@@ -1,12 +1,10 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/badges/quality-score.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/?branch=v1) [![Code Coverage](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/badges/coverage.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/?branch=v1) [![Build Status](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/badges/build.png?b=v1)](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/build-status/v1) [![Code Intelligence Status](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/badges/code-intelligence.svg?b=v1)](https://scrutinizer-ci.com/code-intelligence)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/badges/quality-score.png?b=v4)](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/?branch=v4) [![Code Coverage](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/badges/coverage.png?b=v4)](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/?branch=v4) [![Build Status](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/badges/build.png?b=v4)](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/build-status/v4) [![Code Intelligence Status](https://scrutinizer-ci.com/g/nystudio107/craft-disqus/badges/code-intelligence.svg?b=v4)](https://scrutinizer-ci.com/code-intelligence)
 
 # Disqus plugin for Craft CMS 4.x
 
 Integrates the Disqus commenting system into Craft CMS websites, including Single Sign On (SSO) and custom login/logout URLs
 
 ![Screenshot](./docs/docs/resources/img/plugin-logo.png)
-
-Related: [Disqus for Craft 2.x](https://github.com/nystudio107/disqus)
 
 ## Requirements
 
