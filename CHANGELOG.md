@@ -1,5 +1,9 @@
 # Disqus Changelog
 
+## 1.1.5 - UNRELEASED
+### Fixed
+* No longer throw an exception if the user does not have a profile image ([#39](https://github.com/nystudio107/craft-disqus/issues/39))
+
 ## 1.1.4 - 2024.10.06
 ### Added
 * Added a **Lazy Load Disqus** settings option, so you can control whether the Disqus JavaScript is lazily loaded or not ([#8](https://github.com/nystudio107/craft-disqus/issues/8))
