@@ -2,7 +2,7 @@
   "name": "nystudio107/craft-disqus",
   "description": "Integrates the Disqus commenting system into Craft CMS websites, including Single Sign On (SSO) and custom login/logout URLs",
   "type": "craft-plugin",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "keywords": [
     "craft",
     "cms",
@@ -40,7 +40,14 @@
       "craftcms/plugin-installer": true,
       "yiisoft/yii2-composer": true
     },
+    "audit": {
+      "block-insecure": false
+    },
     "optimize-autoloader": true,
+    "platform": {
+      "php": "8.0.2"
+    },
+    "platform-check": false,
     "sort-packages": true
   },
   "autoload": {
