@@ -150,7 +150,9 @@ class DisqusService extends Component
                 }
                 $data['email'] = $currentUser->email;
                 try {
-                    $data['avatar'] = $currentUser->getPhoto()->getUrl();
+                    if ($currentUser->getPhoto() !== null) {
+                        $data['avatar'] = $currentUser->getPhoto()->getUrl();
+                    }
                 } catch (InvalidConfigException $e) {
                 }
             }
